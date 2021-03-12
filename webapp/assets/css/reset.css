@@ -1,0 +1,283 @@
+@charset "utf-8";
+
+/*리셋*/
+
+/*여백초기화*/
+body, div, ul, li, dl, dt, ol, h1, h2, h3, h4, h5, h6, input, fieldset, legend, p, select, table, th, td, tr, textarea, button, form { 
+    margin:0px 0px 0px 0px;
+    padding:0px 0px 0px 0px;
+    box-sizing: border-box;
+    box-sizing: content-box;
+}
+
+body {font-family: "맑은 고딕";
+        font-size: 12px;
+}
+
+a:link, a:visited, a:active, a:hover  {
+    text-decoration: none;
+    color:#000;
+}
+
+ul, li, ol {list-style-type: none;}
+
+.clearfix {
+  *zoom: 1;
+}
+.clearfix::before,
+.clearfix::after {
+  content: "";
+  display: block;
+  line-height: 0;
+}
+.clearfix::after {
+  clear: both;
+  
+}
+
+.clear{
+	clear:both;
+}
+
+/*공통 레이아웃*/
+
+/*header*/
+
+#wrap {width:1200px;
+        margin: 0 auto;
+}
+
+#header {width:100%;
+        height:170px;
+        padding-top:10px;
+}
+
+#header #logo {
+	width: 200px;
+    margin:0 auto;
+    margin-top:40px;
+    margin-bottom:20px; 
+}
+
+#header #logo a img {
+    width: 200px;
+}
+
+#header #top_menu {
+    float: right;
+}
+
+#header #top_menu li {
+    width: 90px;
+    float: left;
+    margin: 5px 5px 0px 0px; 
+}
+
+#header #top_menu li a  {
+    font-size: 15px;
+}
+
+/*nav -- css로 드롭다운*/
+        
+#nav {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    position: relative;
+    z-index: 100;
+  }
+  
+#main-menu {
+	width:100%;
+}  
+  
+#main-menu > li {
+    float: left;
+    position: relative;
+    width:300px;
+    height:50px;
+    background-color: #ffffff;
+  }
+  
+#main-menu > li > a {
+    font-weight: bold;
+    font-size: 18px;
+    color:#666666;
+    text-align: center;
+    letter-spacing: 0.05em;
+    display: block;
+    line-height: 50px;
+  }
+  
+  
+.sub-menu {
+    position: absolute;
+    display:none;
+  }
+  
+.sub-menu > li {
+    width:150px;
+    height:40px;
+    background-color: #ffffff;
+    margin:0px 0px 0px 70px;
+  }
+  
+.sub-menu > li >  a {
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 40px;
+    color:#666666;
+    text-decoration: none;
+    margin-left: 20px;
+    display: block;
+  }
+
+.sub-menu > li:hover {
+      background-color: #666666;
+  }
+.sub-menu > li:hover  a{
+    color:#ffffff;
+}
+
+#maia_visual {
+	margin-bottom:15px;
+}
+
+
+
+/*sidemenu*/
+
+#container {
+	width:100%;
+	height: auto;
+	top: 80px;
+	position: relative;
+}
+
+#container #side_menu {
+  width: 241px;
+  background: #FFF;
+  border: 1px solid #ccc;
+  top: 10px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  position: relative;
+  display: inline-block;
+}
+
+#side_menu .side_top {
+ cursor: pointer;
+ display: block;
+ padding: 15px 15px 15px 42px;
+ color: #4D4D4D;
+ font-size: 14px;
+ font-weight: bold;
+ border-bottom: 1px solid #CCC;
+ position: relative;
+ -webkit-transition: all 0.4s ease;
+ -o-transition: all 0.4s ease;
+ transition: all 0.4s ease;
+}
+
+#side_profile {
+ cursor: pointer;
+ display: block;
+ width:220px;
+ border: 1px solid #ccc;
+ padding: 10px;
+ color: #4D4D4D;
+ font-size: 14px;
+ font-weight: bold;
+ position: relative;
+ border-radius: 4px;
+ -webkit-transition: all 0.4s ease;
+ -o-transition: all 0.4s ease;
+ transition: all 0.4s ease;
+}
+
+#side_profile span{
+	display: inline-block;
+}
+#today{
+	width:48%;
+	text-align: left;
+}
+#total{
+	width:48%;
+	text-align: right;
+}
+#profileImg{
+	width:100%;
+	height: 225px;
+	margin:15px 0px;
+	margin-bottom: 20px;
+	border-radius: 8px;
+}
+#nickFollDiv{
+	margin-bottom: 15px;
+}
+#nickName{
+	text-align: center;
+	width:160px;
+}
+#tofollow{
+	color: #4ECCF2;
+	text-align: right;
+}
+#follow{
+	width:45%;
+	text-align: left;
+}
+#following{
+	width:45%;
+	text-align: right;
+}
+#side_menu li:last-child .side_top {
+ border-bottom: 0;
+}
+
+
+/**
+* side_sub
+-----------------------------*/
+
+.side_sub {
+  display: none;
+  background: #444359;
+  font-size: 14px;
+}
+
+
+.side_sub a {
+  display: block;
+  color: #d9d9d9;
+  padding: 12px;
+  padding-left: 50px;
+  -webkit-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  border-bottom: 1px solid #444359;
+}
+
+.side_sub a:hover {
+  background: #fff;
+  color: #666;
+  border-bottom: 1px solid #CCC;
+}
+
+/*footer*/
+#footer {
+    position:relative;
+    bottom:0px;
+    width:1200px;
+    height:50px;
+    background-color: #666666;
+}
+
+#footer p {
+    color:#ffffff;
+    line-height: 50px;
+    text-align: center;
+}
+

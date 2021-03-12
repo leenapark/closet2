@@ -1,0 +1,425 @@
+@charset "UTF-8";
+
+/*----------공 통----------*/
+#container #main{
+	display: inline-block;
+	width: 100%;
+	color: #4D4D4D;
+	position: relative;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#container #main-top{
+	padding-bottom: 10px;
+	border-bottom: 2px solid #ccc;
+}
+
+#main-top #closet-menu-title,
+#main-top #closet-category{
+	font-size: 25px;
+	font-weight: normal;
+}
+
+#main-top #closet-menu-title,
+#main-top #closet-category{
+	font-size: 25px;
+	font-weight: normal;
+}
+
+.float-r {float: right; }
+.float-l {float: left; }
+
+.border000 {
+	border:3px solid #000;
+}
+
+.borderBF {
+	border:3px solid #BFBFBF;
+	border-radius: 7px;	
+}
+
+.formTitle{
+	color: #fff;
+	background: #BFBFBF;
+	border: 1px solid #BFBFBF;
+	border-radius: 4px;
+	font-size: 15px;
+	font-weight: normal;
+	padding: 6px 12px;	
+}
+
+/*----------마이룸 메인----------*/
+#container #myRoomMain{
+	float:right;
+	display: inline-block;
+	width: 925px;
+	color: #4D4D4D;
+	position: relative;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#container #myRoomMain #main-middle{
+	margin: 20px 0px;
+	text-align: center;
+	width: 100%;
+	height: 600px;
+	background-image: url(../images/myRoomMain.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	
+}
+
+.mouseOver{
+	background-color : rgba(255, 255, 255, 0.8);
+}
+
+/*----------코디하기 메인----------*/
+#container #codiMain{
+	float:right;
+	display: inline-block;
+	width: 925px;
+	color: #4D4D4D;
+	position: relative;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+/*검색, 글쓰기버튼*/
+.dropdown button{
+	margin : 10px 0px 0px 0px;
+	text-align : left;
+	width:132px;
+}
+
+
+/*codi_box*/
+
+#codi_box {
+	width:925px;
+}
+
+
+#codi_box .codi_line {
+	margin-top:20px;
+}
+
+
+#codi_box .codi_line li {
+	float:lest;
+}
+
+#codi_box .codi_line li .codi_row {
+	width:165px;
+	height:285px;
+	float:left;
+	margin:10px 10px 10px 10px; 
+	text-align: center;
+	font-size:13px;
+	position: relative;
+}
+
+#codi_box .codi_line li .codi_row .row01 {
+	margin-bottom:10px;
+	text-align: left;
+	margin-left:10px;
+}
+
+#codi_box .codi_line li .codi_row .row02_back {
+	width:150px;
+	height:238px;
+	background-color:#000;
+	box-sizing:border-box;
+	z-index:20px;
+	position:absolute;
+	opacity:0; 
+	transition:all 0.3s; 
+	cursor: pointer;
+	margin-left:10px;
+}
+
+
+#codi_box .codi_line li .codi_row img {
+	width:150px;
+	height:238px;
+	border:1px solid #ccc;
+	border-radius: 10px ;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+
+#codi_box .codi_line li .codi_row:hover .row02_back{
+	opacity:0.65;
+	background-color:#000;
+}
+
+
+#codi_box .codi_line li .codi_row .row03 {
+	margin-top:10px;
+}
+
+#codi_box .codi_line li .codi_row .row03 img{
+	width:20px;
+	height:20px;
+	border:0px;
+}
+
+#codi_box .codi_line li .codi_row .row03 i {
+	width:50px;
+	font-size:15px;
+	
+}
+
+/*----------코디하기 글쓰기 폼----------*/
+
+#main form{
+	margin : 20px 0px 0px 0px;
+}
+
+#main input{
+	width: 94.7%;
+	height: 32px;
+	border: 1px solid #BFBFBF;
+	border-radius: 4px;	
+}
+
+#main #imgArea {
+	width: 300px;
+	height: 518px;
+	display: table;
+}
+
+#main #imgArea p{
+	color: #BFBFBF;
+	font-size: 15px;
+	text-align: center;
+  	vertical-align: middle;
+  	display: table-cell;
+}
+
+#main #closetList{
+	width: 870px;
+	height: 518px;	
+}
+
+#main #tabArea {
+	padding: 10px 10px
+}
+
+#main #tabArea .clothImg{
+	width: 150px;
+	height: 150px;
+	margin: 5px 5px;
+	border: 2px soild #000;
+	text-align:center;
+}
+
+#main #tabArea img{
+	width: auto;
+	height: 100%;
+}
+
+#main #tabArea > ul{
+	margin: 0px 0px 30px 0px;
+}
+
+#main #tabArea > div > div > ul > li{
+	float : left;
+}
+
+#main #content{
+	margin: 10px 0px 0px 0px;
+}
+
+#main textarea{
+	width: 100%;
+	border: 1px solid #BFBFBF;
+	border-radius: 4px;	
+}
+
+#main #btnArea {
+	text-align: center;
+	margin: 10px 0px;
+}
+
+/*----------코디하기 글읽기----------*/
+
+#main #main-middle {
+	margin : 20px 0px 0px 0px;
+}
+
+#main-middle #writeTS{
+	margin : 0px 0px 5px 0px;
+	background-color : #3BB1E5;
+	font-weight: bold;
+	color: #fff
+}
+
+#main-middle #writeTS img{
+	width: 20px;
+	height: 20px;
+}
+
+#imgArea > img{
+	width: auto;
+	height: 518px;
+}
+
+#main #codiContent{
+	width: 870px;
+	height: 518px;
+}
+
+#main #codiContent #contentTitle{
+	padding : 6px 12px;
+	display : inline;
+	background-color : #BFBFBF;
+	border-radius: 4px;
+	color : #FFF
+}
+
+#main #codiContent p{
+	padding : 6px 12px;
+}
+
+#main #buttonArea button{
+	margin : 10px 0px 10px 5px;
+}
+
+/*----------트렌드세터 모달창----------*/
+#writeTSModal #madalImgArea img{
+	width: 220px;
+	height: auto;
+}
+
+#writeTSModal .modal-body #modal-content {
+	width: 59%;
+}
+
+#writeTSModal .modal-body #modal-content input{
+	width: 81.4%;
+	height: 32px;
+	border: 1px solid #BFBFBF;
+	border-radius: 4px;	
+}
+
+#writeTSModal .modal-body #modal-content textarea{
+	width: 100%;
+	height: 312px;
+	border: 1px solid #BFBFBF;
+	border-radius: 4px;	
+}
+
+#writeTSModal .modal-body .check_box{
+	width: 220px;
+} 
+
+#writeTSModal .modal-body .tagArea{
+	border:1px solid #BFBFBF;
+	border-radius: 7px;	
+	text-align: center;
+} 
+
+#writeTSModal .modal-footer{
+	text-align: center;
+} 
+
+#writeTSModal .modal-footer .warning{
+	margin-top: 10px;
+} 
+
+
+/*----------베스트드레서 글읽기----------*/
+
+#main #bestDresserTitle{
+	width: 70%;
+	height: 32px;
+	border: 1px solid #BFBFBF;
+	border-radius: 4px;	
+}
+
+#main #writerLabel{
+	display: inline;
+	color: #fff;
+	background: #BFBFBF;
+	border: 1px solid #BFBFBF;
+	border-radius: 4px;
+	font-size: 15px;
+	font-weight: normal;
+	padding: 6px 12px;	
+}
+
+#main #bestDresserWriter{
+	width: 15.9%;
+	border: 1px solid #BFBFBF;
+	border-radius: 4px;	
+	padding: 6px 12px;
+}
+
+#main #main-middle #like{
+	font-size: 15px;
+	font-weight: bold;
+	padding: 6px 12px;
+}
+
+#main #main-middle #like button{
+	all: unset;
+	color: red;
+}
+
+#main #main-middle #tagArea ul li{
+	float: left;
+	background: #BFBFBF;
+	border-radius: 4px;
+	font-size: 12px;
+	padding: 3px 6px;
+	margin: 5px 5px;
+}
+
+#main #main-foot{
+	background: #E5E5E5;
+	padding: 10px 0px;
+}
+
+#main #main-foot #replyWriteForm{
+	background: #FFF;
+	margin: 10px 5px;
+	border: 2px solid #A5A5A5;
+}
+
+#main #main-foot .replyWriter{
+	font-size: 15px;
+	color: #000;
+	padding: 5px 0px 2px 5px;
+}
+
+#main #main-foot #replyWriteForm #replyInput{
+	margin: 0px 5px;
+	color: #7B7B7B;
+	width: 99%;
+	border: 0px;
+}
+
+#main #main-foot #replyWriteForm button{
+	margin: 5px 5px;
+}
+
+#main #main-foot #replyList .bottomLine{
+	border-bottom: 2px solid #7F7F7F;
+}
+
+#main #main-foot #replyList .replyContent{
+	margin: 0px 5px;
+	color: #7B7B7B;
+}
+
+#main #main-foot #replyList .writeDate{
+	margin: 0px 7px;
+	color: #7B7B7B;
+	font-size: 10px;	
+}
+
+#main #main-foot #replyList buttom{
+	margin: 5px 5px;
+}

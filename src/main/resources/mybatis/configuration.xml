@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    
+    <typeAliases>
+    	<typeAlias alias="ClothesVo" type="com.closet.vo.ClothesVo" />
+    	<typeAlias alias="UserVo" type="com.closet.vo.UserVo" />
+    	<typeAlias alias="MyRoomVo" type="com.closet.vo.MyRoomVo" />
+    </typeAliases>
+    
+     <mappers>
+        <mapper resource="mybatis/mappers/closet.xml"/>
+        <mapper resource="mybatis/mappers/user.xml"/>
+    </mappers>
+</configuration>

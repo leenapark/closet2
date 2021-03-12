@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="closet">
+
+	<!-- 쿼리문 작성 -->
+	<insert id="insertClothes" parameterType="ClothesVo">
+	<![CDATA[
+		insert into closet values(seq_closet_no.nextval, 
+								  #{userNo},
+								  #{clothCateNo},
+								  #{clothImg},
+								  #{clothInfo},
+								  #{clothName},
+								  sysdate,
+								  'N')
+	]]>
+	</insert>
+	
+	<select id="getMyRoomData" parameterType="String" resultType="MyRoomVo">
+	<![CDATA[
+		select id,
+			   nickName,
+			   profileImg,
+			   todayVisit,
+			   totalVisit
+		from users where id=#{id}
+	]]>
+	</select>
+</mapper>
