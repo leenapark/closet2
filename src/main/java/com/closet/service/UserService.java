@@ -17,4 +17,20 @@ public class UserService {
 	}
 	
 	
+	// checkid
+	public String checkId(String id) {
+		System.out.println("UserService checkId");
+		String response = "";
+		UserVo userVo = userDao.selectOne(id);
+		
+		if (userVo == null) {
+			response = "can";
+		} else {
+			response = "cant";
+		}
+		
+		return response;
+	}
+	
+	
 }

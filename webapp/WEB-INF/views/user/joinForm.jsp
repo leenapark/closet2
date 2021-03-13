@@ -31,11 +31,7 @@
 
 		<div class="form-area user">
 			<form id="joinForm" action="">
-				<input type="text" name="checkId" value="0">
-				<input type="text" name="checkPassword" value="0">
-				<input type="text" name="checkConfirmPassword" value="0">
-				<input type="text" name="checkEmail" value="0">
-				<input type="text" name="checkNickname" value="0">
+				<input type="text" name="checkId" value="0"> <input type="text" name="checkPassword" value="0"> <input type="text" name="checkConfirmPassword" value="0"> <input type="text" name="checkEmail" value="0"> <input type="text" name="checkNickname" value="0">
 
 
 				<!-- header -->
@@ -52,16 +48,22 @@
 				<div class="form-group">
 					<label for="userId" class="form-label" aria-hidden="true"> ID <span class="essential">필수 입력</span></label>
 					<input type="text" class="d-input text-uid" tabindex="0" id="userId" name="uesrId" placeholder="ID 입력(5~11자)" autocomplete="off" maxlength="11">
-					<p class="validationId" id="hLayerid"></p>
+					<p class="validationId" id="hLayerid">
+					
+					<!-- 아이디 사용 가능 여부 -->
+					
+					</p>
 				</div>
 
 				<div class="form-group">
-					<label for="password" class="form-label" aria-hidden="true"> Password <span class="essential">필수 입력</span>
-					</label> <input type="text" class="d-input text-password" tabindex="0" id="password" name="password" placeholder="비밀번호(숫자, 영문, 특수문자 조합 최소 8자)" autocomplete="off">
+					<label for="password" class="form-label" aria-hidden="true"> Password <span class="essential">필수 입력</span></label>
+					<input type="text" class="d-input text-password" tabindex="0" id="password" name="password" placeholder="비밀번호(숫자, 영문, 특수문자 조합 최소 8자)" autocomplete="off">
+					<p class="n-validation" id="passwordValiMessage"></p>
 				</div>
 
 				<div class="form-group">
 					<input type="text" class="d-input text-confirmPassword" tabindex="0" id="confirmPassword" name="confirmPassword" placeholder="비밀번호 확인" autocomplete="new-password">
+					<p class="n-validation" id="passwordConfirmValiMessage"></p>
 				</div>
 
 				<div class="form-group">
@@ -112,64 +114,116 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/includes/common.js"></script>
 
 <script type="text/javascript">
-var userIdLengthtrigger = false;
-var isPassUserId = false;
 
-var joinBtnActive = function (isActive) {
-	$("#joinBtn").attr("class", "d-btn btn-primary" + (!isActive ? " disabled" : ""));
-};
 
-function validateLengthUserIdWhenKeyup(){
-	$('userId').val($('userId')).val.trim();
-	var $userId = $('userId');
+function validateLengthUserIdWhenKeyup() {
+	$('#userId').val($('#userId').val().trim());
+	var userId = $('#userId');
+
 	
-	if($userId.val().length > 11){
+	if (userId.val().length > 11) {
 		// Id 길이 제한
 		var limitUserId = $userId.val().substring(0, 11);
 		$userId.val(limitUserId);
 	}
 }
 
-function existUserId(response) {
-	console.log(responce);
-	var $userId = $('userId');
-	if(responce.success) {
-		$("input[name='checkId']").val('1');
-		#userId.attr("class", "d-input text-uid");
-		$('#hLayerid').attr("class", "validationId validation-pass");
-		$('#hLayerid').html('사용 가능한 아이디입니다.')
-		
-		isPassUserId = true;
-		if(isPassJoin()) {
-			joinVtnActive(treu);
-		}
-	}
-}
 
 
-function validateUserId(){
+$("#userId").on("propertychange change keyup paste input", function(){
+	var userId = $("#userId").val().trim();
+	console.log(userId.length);
+	
 	validateLengthUserIdWhenKeyup();
 	
-	var $userId = $('userId');
-	consloe.log($userId);
-	if($userId.val().length === 0) {
-		$("#hLayerid")
-					//.removeClass
-					.html('아이디는 필수 정보입니다.');
-		
-		
+	if (userId.length == 0) {
+		$("#hLayerid").removeClass('validation-pass')
+				.html('아이디는 필수 정보입니다.');
+		return false;
 	}
-}
+
+	if (userId.length < 5) {
+		$("#hLayerid").removeClass('validation-pass').html(
+				'아이디는 5자 이상이어야 합니다');
+		return false;
+	}
+	
+	if (userId.length > 11) {
+		var subUserId = $userId.val().substring(0, 11);
+		$("#userId").val(subUserId);
+	}
+
+	$.ajax({		
+
+		url : "${pageContext.request.contextPath }/user/checkid",		
+		type : "post",
+		data : {userId: userId},
+		
+		
+		dataType : "text",
+		success : function(response){
+			/*성공시 처리해야될 코드 작성*/
+			if(response == 'can'){
+				console.log("can");
+				$("#hLayerid").html("사용할 수 있는 아이디 입니다.");
+			} else {
+				console.log("cant");
+				$("#hLayerid").html("사용할 수 없는 아이디 입니다.")
+				
+			}				
+			console.log("response: " + response);
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+});
 
 
-function ajaxuserId(){
+ 
+
+
+
+
+$("#password").on("propertychange change keyup paste input", function(){
+	var password = $("#password").val().trim();
+	if (password == '') {
+		$('#passwordValiMessage').html('비밀번호는 필수정보입니다.');
+	}
+});
+
+
+/*
+
+function validatePassword(){
+	var password = $("#password").val().trim();
+	$("input[name='password']").val('');
+	$("input[name='password']").val(password);
 	
+	if (password === '') {
+		$('#passwordValiMessage').html('비밀번호는 필수정보입니다.');
+		$("input[name='password']").attr('class', 'n-input input');
+		$("input[name='confirmPassword']").attr('class', 'n-input input');
+		$("passwordConfirmValiMessage").html('');
+		isPassPassword = false;
+		joinBtnActive(false);
+		return;
+	}
 	
 }
+
+*/
+
+$("#joinForm").on("submit", function(){
+	
+	// 패스워드 8자 이상
+	var pw = $("#password").val();
 	
 	
-	
+});
+
 </script>
+
 
 </html>
 

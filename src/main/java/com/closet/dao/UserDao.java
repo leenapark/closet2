@@ -16,4 +16,11 @@ public class UserDao {
 		
 		return sqlSession.selectOne("user.login", userVo);
 	}
+	
+	// checkId
+	public UserVo selectOne(String id) {
+		System.out.println("UserDao checkId: " + id);
+		
+		return sqlSession.selectOne("user.selectById", id);
+	}
 }

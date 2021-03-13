@@ -37,6 +37,13 @@ public class UserController {
 		return "user/joinForm";
 	}
 	
+	@RequestMapping("/joinform2")
+	public String joinForm2() {
+		System.out.println("usercontroller joinForm");
+		
+		return "user/joinForm2";
+	}
+	
 	@RequestMapping("/complete")
 	public String joincomplete() {
 		System.out.println("UserController joincomplete");
@@ -79,11 +86,11 @@ public class UserController {
 	
 	/********id check*******/
 	@ResponseBody
-	@RequestMapping(value="/idcheck", method = {RequestMethod.GET, RequestMethod.POST})
-	public String idcheck(@RequestParam("userId") String userId) {
-		System.out.println("UserController idcheck");
+	@RequestMapping(value="/checkid", method = {RequestMethod.GET, RequestMethod.POST})
+	public String checkid(@RequestParam("userId") String id) {
+		System.out.println("UserController idcheck: " + id);
 		
-		String response = "";
+		String response = userService.checkId(id);
 		return response;
 	}
 	
