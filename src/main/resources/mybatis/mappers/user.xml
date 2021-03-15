@@ -26,4 +26,35 @@
 		]]>
 	</select>
 	
+<!-- 	userNo, /* 회원식별번호 */
+        id, /* 아이디 */
+        password, /* 비밀번호 */
+        name, /* 이름 */
+        email, /* 이메일 */
+        gender, /* 성별 */
+        nickName, /* 별명 */
+        joinDate, /* 가입일 */
+        profileImg varchar2(1000), /* 프로필이미지 */
+	todayVisit NUMBER NOT NULL, /* 오늘방문자 */
+	totalVisit NUMBER NOT NULL, /* 총 방문자 */
+        
+	 -->
+	<!-- 회원가입 -->
+	<insert id="insertJoin" parameterType="UserVo">
+		<![CDATA[
+		insert into users
+		VALUES(seq_users_no.nextval,
+				#{id},
+				#{password},
+				#{name},
+				#{email},
+				#{gender},
+				#{nickName},
+				sysdate,
+				#{profileImg},
+				default,
+				default)		
+		]]>
+	</insert>
+	
 </mapper>

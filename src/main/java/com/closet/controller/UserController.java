@@ -94,6 +94,15 @@ public class UserController {
 		return response;
 	}
 	
+	/*********회원가입*********/
+	@RequestMapping(value="/join", method= {RequestMethod.GET, RequestMethod.POST})
+	public String join(@ModelAttribute UserVo userVo) {
+		System.out.println("join: " + userVo.toString());
+		userService.join(userVo);
+		
+		return	"redirect:/";
+	}
+	
 	/***************************follow***********************************/
 	@RequestMapping("/following")
 	public String following() {

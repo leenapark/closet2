@@ -32,5 +32,11 @@ public class UserService {
 		return response;
 	}
 	
+	// 회원가입
+	public void join(UserVo userVo) {
+		System.out.println("UserService join: " + userVo);
+		
+		userDao.insertJoin(userVo);
+	}
 	
 }

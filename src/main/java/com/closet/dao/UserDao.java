@@ -23,4 +23,12 @@ public class UserDao {
 		
 		return sqlSession.selectOne("user.selectById", id);
 	}
+	
+	// 회원가입
+	public void insertJoin(UserVo userVo) {
+		System.out.println("UserDao insertJoin: " + userVo);
+		
+		sqlSession.insert("insertJoin", userVo);
+	}
+	
 }

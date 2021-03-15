@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <!--브라우저가 문서를 해설할때 필요한 정보-->
-<title>closetory 회원가입</title>
+<title>in my closet</title>
 
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
@@ -30,8 +30,8 @@
 		<h1 class="n-hidden">closet 회원가입</h1>
 
 		<div class="form-area user">
-			<form id="joinForm" action="${pageContext.request.contextPath}/user/join" method="post">
-				<input type="text" name="profileImg" value="${pageContext.request.contextPath}/assets/images/profile.png">
+			<form id="joinForm" action="">
+				<input type="text" name="checkId" value="0"> <input type="text" name="checkPassword" value="0"> <input type="text" name="checkConfirmPassword" value="0"> <input type="text" name="checkEmail" value="0"> <input type="text" name="checkNickname" value="0">
 
 
 				<!-- header -->
@@ -46,8 +46,7 @@
 
 				<!-- join form -->
 				<div class="form-group">
-					<label for="userId" class="form-label" aria-hidden="true"> ID <span class="essential">필수 입력</span></label>
-					<input type="text" class="d-input text-uid" tabindex="0" id="userId" name="id" placeholder="ID 입력(5~11자)" autocomplete="off" maxlength="11">
+					<label for="userId" class="form-label" aria-hidden="true"> ID <span class="essential">필수 입력</span></label> <input type="text" class="d-input text-uid" tabindex="0" id="userId" name="uesrId" placeholder="ID 입력(5~11자)" autocomplete="off" maxlength="11">
 					<p class="validationId" id="hLayerid">
 
 						<!-- 아이디 사용 가능 여부 -->
@@ -78,8 +77,7 @@
 
 				<div class="form-group">
 					<label for="nickName" class="form-label" aria-hidden="true"> 닉네임 <span class="essential">필수 입력</span>
-					</label>
-					<input type="text" class="d-input text-nickName" tabindex="0" id="joinNickName" name="nickName" placeholder="닉네임" autocomplete="off" maxlength="50">
+					</label> <input type="text" class="d-input text-nickName" tabindex="0" id="joinNickName" name="nickName" placeholder="닉네임" autocomplete="off" maxlength="50">
 					<p id="hLayerNickName"></p>
 				</div>
 
@@ -120,10 +118,8 @@
 				</div>
 
 				<div class="form-group">
-					<label for="gender" class="form-label" aria-hidden="true"> gender <span class="essential">필수 입력</span></label>
-					<br>
-					<label for="rdo-male" class="gender-label">남</label> <input type="radio" id="rdo-male" name="gender" value="male">
-					<label for="rdo-female" class="gender-label">여</label> <input type="radio" id="rdo-female" name="gender" value="female">
+					<label for="gender" class="form-label" aria-hidden="true"> gender <span class="essential">필수 입력</span>
+					</label> <br> <label for="rdo-male">남</label> <input type="radio" id="rdo-male" name="gender" value="male"> <label for="rdo-female" class="gender-label">여</label> <input type="radio" id="rdo-female" name="gender" value="female">
 				</div>
 
 				<!-- 약관 동의 -->
@@ -143,25 +139,95 @@
 		</div>
 		<!-- join form -->
 
+
+
+
+
 	</div>
 </body>
 
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/includes/common.js"></script>
 
+<script type="text/javascript">
+	// DOM이 생성되면
+	$("document").ready(function() {
+		console.log("ready");
+		$("li").click(function() {
+			console.log("index: " + $(this).index());
+			var index = $("li").index(this);
+			console.log("index: " + index);
+		});
+	});
+</script>
 
 <script type="text/javascript">
+	function validateLengthUserIdWhenKeyup() {
+		$('#userId').val($('#userId').val().trim());
+		var userId = $('#userId');
 
+		if (userId.val().length > 11) {
+			// Id 길이 제한
+			var limitUserId = $userId.val().substring(0, 11);
+			$userId.val(limitUserId);
+		}
+	}
 
+	$("#userId").on(
+			"propertychange blur change keyup paste input",
+			function() {
+				var userId = $("#userId").val().trim();
+				console.log(userId.length);
 
+				validateLengthUserIdWhenKeyup();
 
-	$("#userId").on("propertychange blur change keyup paste input", function() {
-		 chenkId();
+				if (userId.length == 0) {
+					$("#hLayerid").removeClass('validation-pass').html(
+							'아이디는 필수 정보입니다.');
+					return false;
+				}
+
+				if (userId.length < 5) {
+					$("#hLayerid").removeClass('validation-pass').html(
+							'아이디는 5자 이상이어야 합니다');
+					return false;
+				}
+
+				if (userId.length > 11) {
+					var subUserId = $userId.val().substring(0, 11);
+					$("#userId").val(subUserId);
+				}
+
+				$.ajax({
+
+					url : "${pageContext.request.contextPath }/user/checkid",
+					type : "post",
+					data : {
+						userId : userId
+					},
+
+					dataType : "text",
+					success : function(response) {
+						/*성공시 처리해야될 코드 작성*/
+						if (response == 'can') {
+							console.log("can");
+							$("#hLayerid").html("사용할 수 있는 아이디 입니다.");
+						} else {
+							console.log("cant");
+							$("#hLayerid").html("사용할 수 없는 아이디 입니다.")
+
+						}
+						console.log("response: " + response);
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
 			});
 
 	// 비밀번호
-	$(".pass").on("propertychange focusout change keyup paste input", function() {
-		
+	$(".pass").on("propertychange change keyup paste input", function() {
+
 		var password = $("#password").val().trim();
 		console.log("password: " + password);
 		var num = password.search(/[0-9]/g);
@@ -202,7 +268,7 @@
 			}
 		}
 
-		$("#confirmPassword").on("focusout", function() {
+		$("#confirmPassword").on("blur", function() {
 			if (confirmPassword.length == 0) {
 				$("#passwordConfirmValiMessage").html('비밀번호 확인은 필수정보입니다.');
 				return;
@@ -211,25 +277,12 @@
 
 	});
 
-	/***************이름*************/
+	// 이름
 	$("#name").on("blur", function() {
 		var name = $("#name").val().trim();
 
 		if (name.length === 0) {
 			$("#nameValiMessage").html('이름은 필수 정보입니다.');
-		} else {
-			$("#nameValiMessage").html('');
-		}
-	});
-	
-	/***************닉네임*************/
-	$("#joinNickName").on("blur", function() {
-		var name = $("#joinNickName").val().trim();
-
-		if (name.length === 0) {
-			$("#hLayerNickName").html('닉네임은 필수 정보입니다.');
-		} else {
-			$("#hLayerNickName").html('');
 		}
 	});
 	
@@ -258,6 +311,8 @@
 			}
 			
 		}
+		
+		
 
 	});
 
@@ -319,152 +374,15 @@
 	});
 
 
+	/****************gender***************/
 	
 	
-	$(".form-area #joinForm").on("submit", function() {
-		
-		var id = $("#userId").val();
-		if (id.length == 0) {
-			console.log("id check");
-			alert("아이디를 입력해주세요.");
-			return false;
-		} else if (id.length < 5) {
-			alert("아이디는 5자 이상 입력해주세요.");
-			return false;
-		}
-		
+	$("#joinForm").on("submit", function() {
+
 		// 패스워드 8자 이상
 		var pw = $("#password").val();
-		if (pw.length === 0){
-			alert("비밀 번호를 입력해주세요.");
-			return false;
-		}
-		
-		// 이름 미입력
-		var name = $("#name").val();
-		if (name.length === 0) {
-			alert("이름을 입력해주세요.");
-			return false;
-		}
-		
-		// 닉네임 미입력
-		var nickName = $("#joinNickName").val();
-		if (nickName.length === 0) {
-			alert("닉네임을 입력해주세요.");
-			return false;
-		}
-		
-		// 이메일 미입력
-		var email = $("#email").val();
-		if (email.length === 0) {
-			alert("이메일을 입력해주세요.");
-			return false;
-		}
-		
-		// 성별 미선택
-		var gender = $('input[name="gender"]').is(":checked");
-		console.log(gender);
-		if (!gender) {
-			alert("성별을 선택해주세요.");
-			
-			return false;
-		}
-		
-		var check = $("#chk-agree").is(":checked");
-		console.log(check);		
-		if(!check) {
-			alert("가입하시려면 약관에 동의 해주세요.");
-			return false;
-		}
-		
-		return true;
 
 	});
-	
-	
-	
-	
-	/*************함수 정의***********/
-	
-	function validateLengthUserIdWhenKeyup() {
-		$('#userId').val($('#userId').val().trim());
-		var userId = $('#userId');
-
-		if (userId.val().length > 11) {
-			// Id 길이 제한
-			var limitUserId = $userId.val().substring(0, 11);
-			$userId.val(limitUserId);
-		}
-	}
-	
-	
-	function chenkId() {
-		var userId = $("#userId").val().trim();
-		console.log(userId.length);
-		var num = userId.search(/[0-9]/g);
-		var eng = userId.search(/[a-z]/ig);
-		
-		validateLengthUserIdWhenKeyup();
-	
-		if (userId.length == 0) {
-			$("#hLayerid").removeClass('validation-pass').html(
-					'아이디는 필수 정보입니다.');
-			return false;
-		}
-	
-		if (userId.length < 5) {
-			$("#hLayerid").removeClass('validation-pass').html(
-					'아이디는 5자 이상이어야 합니다');
-			return false;
-		}
-	
-		if (userId.length > 11) {
-			var subUserId = $userId.val().substring(0, 11);
-			$("#userId").val(subUserId);
-		}
-		
-		if (userId.search(/\s/) != -1) {
-			$('#hLayerid').html("아이디는 공백 없이 입력해주세요.");
-			return false;
-		} else if (num < 0 || eng < 0) {
-			$('#hLayerid').html("영문, 숫자를 혼합하여 입력해주세요.");
-			return false;
-		}
-	
-		$.ajax({
-	
-			url : "${pageContext.request.contextPath }/user/checkid",
-			type : "post",
-			data : {
-				userId : userId
-			},
-	
-			dataType : "text",
-			success : function(response) {
-				/*성공시 처리해야될 코드 작성*/
-				if (response == 'can') {
-					console.log("can");
-					$("#hLayerid").html("사용할 수 있는 아이디 입니다.");
-				} else {
-					console.log("cant");
-					$("#hLayerid").html("사용할 수 없는 아이디 입니다.")
-	
-				}
-				console.log("response: " + response);
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		});
-	}
-	
-
-	/* 해야하는 일
-	경고 css 추가로 주기
-	경고 먹으면 submit 안되게 하기 */
-	
-	
-	
 </script>
 
 
