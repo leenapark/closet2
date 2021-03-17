@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.closet.service.UserService;
 import com.closet.vo.UserVo;
@@ -105,8 +106,8 @@ public class UserController {
 	
 	/*****************회원정보 수정********************/
 	@RequestMapping(value="/modify", method = {RequestMethod.GET, RequestMethod.POST})
-	public String modify() {
-		System.out.println("UserController");
+	public String modify(@RequestParam("change-profile-image") MultipartFile profile) {
+		System.out.println("UserController modify: " + profile);
 		
 		
 		return "";

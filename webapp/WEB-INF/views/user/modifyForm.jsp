@@ -26,7 +26,6 @@
 	<div id="wrap">
 
 
-
 		<h1 class="n-hidden">회원 정보 수정</h1>
 
 		<div class="form-area user">
@@ -51,8 +50,21 @@
 					<div class="basic-profile">
 						<img src="${pageContext.request.contextPath}/assets/images/default.png">
 					</div>
-					<label for="change-profile-image" class="n-btn btn-sm btn-default">사진 선택</label>
-					<input type="file" id="change-profile-image" class="n-hidden">
+					<div class="profile-btn">
+						<button type="button" id="change-profile-image-btn" class="n-btn btn-sm btn-default cert-hidden">프로필 변경</button>
+					</div>
+					<div class="btn-group">
+						<label for="profile-image" class="n-btn btn-sm">프로필 변경</label>
+						<input type="file" id="profile-image" class="n-hidden">
+						<button type="button" class="n-btn btn-sm" id="change-default-image-btn">기본 프로필</button>
+						<input type="text" id="defaultImage" name="defaultImage">
+						<button type="button" class="n-btn btn-sm btn-lighter" id="change-profile-cancel-btn">
+							취소
+						</button>
+						<button type="button" class="n-btn btn-sm btn-accent disabled" id="change-profile-finish-btn">
+							완료
+						</button>
+					</div>
 				</div>
 
 				<div class="form-group">
@@ -68,7 +80,33 @@
 
 				<div class="form-group">
 					<label for="password" class="form-label" aria-hidden="true"> Password </label>
-					<input type="text" class="d-input text-password" tabindex="0" id="password" name="password" placeholder="비밀번호(숫자, 영문, 특수문자 조합 최소 8자)" autocomplete="off">
+					<div class="change-password-area">
+						<button type="button" id="change-password-btn" class="n-btn btn-sm btn-default cert-hidden">비밀번호 변경</button>
+						
+						<div class="modify-pass">
+							<div class="pass">
+								<label for="password">현재 비밀번호</label>
+								<input type="text" class="d-input text-password" tabindex="0" id="password" name="password" autocomplete="off">
+							</div>
+							<div class="pass">
+								<label for="password">새 비밀번호</label>
+								<input type="text" class="d-input text-password" tabindex="0" id="password" name="password" autocomplete="off">
+							</div>
+							<div class="pass">
+								<label for="password">새 비밀번호 확인</label>
+								<input type="text" class="d-input text-password" tabindex="0" id="password" name="password" autocomplete="off">
+							</div>
+							
+							<div class="pass-btn-group">
+								<button type="button" class="n-btn btn-sm btn-lighter" id="change-password-cancel-btn">
+									취소
+								</button>
+								<button type="button" class="n-btn btn-sm btn-accent disabled" id="change-password-finish-btn">
+									완료
+								</button>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div class="form-group">
@@ -107,8 +145,46 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/includes/common.js"></script>
 
+
 <script type="text/javascript">
-	
+
+//프로필 변경 누를 경우 안에 숨겨져 있던 버튼이 나타남
+$("#change-profile-image-btn").on("click", function(){
+	$(".btn-group").attr("class", "btn-group is-active");
+});
+
+$("#change-password-btn").on("click", function(){
+	$(".modify-pass").attr("class", "modify-pass is-active");
+});
+
+$("#change-profile-cancel-btn").on("click", function(){
+	$(".btn-group").removeClass("is-active");
+});
+
+$("#change-password-cancel-btn").on("click", function(){
+	$(".modify-pass").removeClass("is-active");
+});
+
+
+// 프로필 이미지 확장자 확인
+$("#change-profile-finish-btn").on("click", function(e){
+	e.preventDefault();
+    var files = $("#profile-image")[0].files[0];
+    var defaultImageValue = $('#defaultImage').val();
+    
+    console.log(files);
+    console.log(defaultImageValue);
+    
+    if ($('#defaultImage').val() == '') {
+    	console.log("defaultImage");
+    	defaultImageValue = "false";
+    }
+    
+    
+    
+});
+
+
 </script>
 
 </html>

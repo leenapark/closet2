@@ -341,5 +341,58 @@ ul {
 }
 
 
+.n-btn.btn-default {
+	width: 100%;
+    border: 1px solid #e5e5e5;
+    background-color: #ffffff;
+    font-size: 15px;
+    text-align: center;
+    padding: 12px 9px 2px 9px;
+    margin: 10px 0px;
+    box-sizing: border-box !important;
+    transition: border 0.2s ease-in-out;
+    font-weight: bold;
+}
 
+.n-btn.btn-sm {
+    min-width: 57px;
+    line-height: 30px;
+    padding-top: 0;
+    border: 1px solid #e5e5e5;
+    background-color: #ffffff;
+}
 
+#change-default-image-btn {
+	font-weight: bold;
+}
+
+.pass {
+	margin-bottom: 25px;
+}
+
+.n-btn.btn-lighter {
+    border: 1px solid #f1f1f1;
+    background-color: #f1f1f1;
+    color: #000000;
+}
+
+.n-btn.btn-accent.disabled {
+    border-color: #ccc;
+    background-color: #ccc;
+}
+
+.btn-group {
+	display: none;
+}
+
+.btn-group.is-active {
+	display: block;
+}
+
+.modify-pass {
+	display: none;
+}
+
+.modify-pass.is-active {
+	display: block;
+}
