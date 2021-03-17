@@ -36,9 +36,11 @@
 				<header class="user-header">
 
 					<div class="logo">
-						<img src="${pageContext.request.contextPath}/assets/images/logo.png">
+						<a href="${pageContext.request.contextPath}/">
+							<img src="${pageContext.request.contextPath}/assets/images/logo.png">
+						</a>
 					</div>
-					<p class="text-fontsname">회원가입</p>
+					<p class="text-fontsname">회원 정보 수정</p>
 				</header>
 				<!-- header -->
 
@@ -49,37 +51,38 @@
 					<div class="basic-profile">
 						<img src="${pageContext.request.contextPath}/assets/images/default.png">
 					</div>
-					
-					<button type="button" id="change-profile-image" class="d-btn">사진 변경</button>
+					<label for="change-profile-image" class="n-btn btn-sm btn-default">사진 선택</label>
+					<input type="file" id="change-profile-image" class="n-hidden">
 				</div>
 
 				<div class="form-group">
-					<label for="userId" class="form-label" aria-hidden="true"> ID <span class="essential">필수 입력</span>
-					</label> <input type="text" readonly class="d-input text-uid" tabindex="0" id="userId" name="uesrId" placeholder="ID 입력(5~11자)" autocomplete="off" maxlength="11">
+					<label for="userId" class="form-label" aria-hidden="true"> ID</label>
+					<input type="text" readonly class="d-input" tabindex="0" id="userId" name="uesrId" value="${authMember.id }">
+					<strong>${authMember.id }</strong>
 				</div>
 
 				<div class="form-group">
-					<label for="name" class="form-label" aria-hidden="true"> 이름 <span class="essential">필수 입력</span>
-					</label> <input type="text" readonly class="d-input text-name" tabindex="0" id="name" name="name" placeholder="이름" autocomplete="off" maxlength="50">
+					<label for="name" class="form-label" aria-hidden="true"> 이름 </label>
+					<input type="text" readonly class="d-input" tabindex="0" id="name" name="name" placeholder="${authMember.name }" autocomplete="off" maxlength="50">
 				</div>
 
 				<div class="form-group">
-					<label for="password" class="form-label" aria-hidden="true"> Password <span class="essential">필수 입력</span>
-					</label> <input type="text" class="d-input text-password" tabindex="0" id="password" name="password" placeholder="비밀번호(숫자, 영문, 특수문자 조합 최소 8자)" autocomplete="off">
+					<label for="password" class="form-label" aria-hidden="true"> Password </label>
+					<input type="text" class="d-input text-password" tabindex="0" id="password" name="password" placeholder="비밀번호(숫자, 영문, 특수문자 조합 최소 8자)" autocomplete="off">
 				</div>
 
 				<div class="form-group">
-					<label for="nickName" class="form-label" aria-hidden="true"> 닉네임 <span class="essential">필수 입력</span>
+					<label for="nickName" class="form-label" aria-hidden="true"> 닉네임
 					</label> <input type="text" class="d-input text-nickName" tabindex="0" id="joinNickName" name="nickName" placeholder="닉네임" autocomplete="off" maxlength="50">
 				</div>
 
 				<div class="form-group">
-					<label for="email" class="form-label" aria-hidden="true"> E-mail <span class="essential">필수 입력</span>
+					<label for="email" class="form-label" aria-hidden="true"> E-mail
 					</label> <input type="text" class="d-input text-email" tabindex="0" id="email" name="email" placeholder="E-mail" autocomplete="off" maxlength="50">
 				</div>
 
 				<div class="form-group">
-					<label for="gender" class="form-label" aria-hidden="true"> gender <span class="essential">필수 입력</span>
+					<label for="gender" class="form-label" aria-hidden="true"> gender
 					</label> <br> <label for="rdo-male">남</label> <input type="radio" id="rdo-male" name="gender" value="male"> <label for="rdo-female" class="gender-label">여</label> <input type="radio" id="rdo-female" name="gender" value="female">
 				</div>
 

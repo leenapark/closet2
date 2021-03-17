@@ -40,9 +40,9 @@ button {
 }
 
 /* 사이트 로고 사이즈 조절 */
-.user-header .logo > img {
+.user-header .logo img {
 	width: 300px;
-	height: 100px;
+	height: 150px;
 }
 
 /* 사이트 로고 위치 */
@@ -98,6 +98,22 @@ button {
     transition: border 0.2s ease-in-out;
 }
 
+/* 거절 css */
+.user .d-input.input-reject {
+	    border-color: #ff0000 !important;
+}
+
+.user .n-validation {
+	font-size: 12px;
+    color: #ff0000;
+    margin-top: 7px;
+}
+
+/* 통과 css */
+.user .validation-pass {
+	display: block;
+    color: #14aaff;	
+}
 
 /* 회원가입 버튼 조정 */
 .user .d-btn {
@@ -200,7 +216,7 @@ em {
 
 .login-header .logo > img, .join-header .logo > img {
 	width: 300px;
-	height: 60px;
+	height: 150px;
 }
 
 .login-header, .join-header {

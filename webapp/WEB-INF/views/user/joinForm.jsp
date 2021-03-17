@@ -31,7 +31,8 @@
 
 		<div class="form-area user">
 			<form id="joinForm" action="${pageContext.request.contextPath}/user/join" method="post">
-				<input type="text" name="profileImg" value="${pageContext.request.contextPath}/assets/images/profile.png">
+				<!-- hidden basic image -->
+				<input type="text" name="profileImg" class="n-hidden" value="${pageContext.request.contextPath}/assets/images/profile.png">
 
 
 				<!-- header -->
@@ -47,8 +48,8 @@
 				<!-- join form -->
 				<div class="form-group">
 					<label for="userId" class="form-label" aria-hidden="true"> ID <span class="essential">필수 입력</span></label>
-					<input type="text" class="d-input text-uid" tabindex="0" id="userId" name="id" placeholder="ID 입력(5~11자)" autocomplete="off" maxlength="11">
-					<p class="validationId" id="hLayerid">
+					<input type="text" class="d-input" tabindex="0" id="userId" name="id" placeholder="ID 입력(5~11자)" autocomplete="off" maxlength="11">
+					<p class="n-validation" id="hLayerid">
 
 						<!-- 아이디 사용 가능 여부 -->
 
@@ -56,7 +57,8 @@
 				</div>
 
 				<div class="form-group pass">
-					<label for="password" class="form-label" aria-hidden="true"> Password <span class="essential">필수 입력</span></label> <input type="text" class="d-input text-password" tabindex="0" id="password" name="password" placeholder="비밀번호(숫자, 영문, 특수문자 조합 최소 8자)" autocomplete="off">
+					<label for="password" class="form-label" aria-hidden="true"> Password <span class="essential">필수 입력</span></label>
+					<input type="text" class="d-input" tabindex="0" id="password" name="password" placeholder="비밀번호(숫자, 영문, 특수문자 조합 최소 8자)" autocomplete="off">
 					<p class="n-validation" id="passwordValiMessage">
 
 						<!-- 패스워드 안내문 -->
@@ -65,7 +67,7 @@
 				</div>
 
 				<div class="form-group pass">
-					<input type="text" class="d-input text-confirmPassword" tabindex="0" id="confirmPassword" name="confirmPassword" placeholder="비밀번호 확인" autocomplete="new-password">
+					<input type="text" class="d-input" tabindex="0" id="confirmPassword" name="confirmPassword" placeholder="비밀번호 확인" autocomplete="new-password">
 					<p class="n-validation" id="passwordConfirmValiMessage">
 						<!-- 비밀번호 확인 안내문 -->
 					</p>
@@ -79,15 +81,15 @@
 				<div class="form-group">
 					<label for="nickName" class="form-label" aria-hidden="true"> 닉네임 <span class="essential">필수 입력</span>
 					</label>
-					<input type="text" class="d-input text-nickName" tabindex="0" id="joinNickName" name="nickName" placeholder="닉네임" autocomplete="off" maxlength="50">
-					<p id="hLayerNickName"></p>
+					<input type="text" class="d-input" tabindex="0" id="joinNickName" name="nickName" placeholder="닉네임" autocomplete="off" maxlength="50">
+					<p id="nickNameValiMessage" class="n-validation"></p>
 				</div>
 
 				<div class="form-group">
 					<label for="email" class="form-label" aria-hidden="true"> E-mail <span class="essential">필수 입력</span>
 					</label>
 					<div class="n-form-layer" id="emailFromLayer">
-						<input type="text" class="d-input text-email" tabindex="0" id="email" name="email" placeholder="E-mail" autocomplete="off" maxlength="50">
+						<input type="text" class="d-input" tabindex="0" id="email" name="email" placeholder="E-mail" autocomplete="off" maxlength="50">
 						<ul id="emailDomainList" class="layer">
 							<li>
 								<button type="button">
@@ -115,7 +117,7 @@
 								</button>
 							</li>
 						</ul>
-						<p id="hLayeremail"></p>
+						<p id="hLayeremail" class="n-validation"></p>
 					</div>
 				</div>
 
@@ -172,20 +174,34 @@
 		$("input[name='password']").val(password);
 
 		if (password === '') {
+			$("#password").attr("class", "d-input input-reject");
+			$("#passwordValiMessage").attr("class", "n-validation");
 			$('#passwordValiMessage').html('비밀번호는 필수정보입니다.');
 			$("passwordConfirmValiMessage").html('');
-			isPassPassword = false;
 			return;
 		}
 
+		if (password.length < 8) {
+			$("#password").attr("class", "d-input input-reject");
+			$("#passwordValiMessage").attr("class", "n-validation");
+			$('#passwordValiMessage').html("비밀번호는 8자 이상 입력해주세요.");
+			return;
+		}
+		
 		if (password.search(/\s/) != -1) {
+			$("#password").attr("class", "d-input input-reject");
+			$("#passwordValiMessage").attr("class", "n-validation");
 			$('#passwordValiMessage').html("비밀번호는 공백 없이 입력해주세요.");
 			return false;
 		} else if (num < 0 || eng < 0 || spe < 0) {
+			$("#password").attr("class", "d-input input-reject");
+			$("#passwordValiMessage").attr("class", "n-validation");
 			$('#passwordValiMessage').html("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
 			return false;
 		} else {
 			console.log("통과");
+			$("#password").attr("class", "d-input input");
+			$("#passwordValiMessage").attr("class", "n-validation validation-pass");
 			$('#passwordValiMessage').html('');
 
 		}
@@ -195,15 +211,21 @@
 
 		if (confirmPassword !== '' && password.length > 7) {
 			if (password !== confirmPassword) {
+				$("#confirmPassword").attr("class", "d-input input-reject");
+				$("#passwordValiMessage").attr("class", "n-validation");
 				$("#passwordConfirmValiMessage").html('비밀번호가 일치하지 않습니다.');
 				return;
 			} else {
+				$("#confirmPassword").attr("class", "d-input input");
+				$("#passwordConfirmValiMessage").attr("class", "n-validation validation-pass");
 				$("#passwordConfirmValiMessage").html('');
 			}
 		}
 
 		$("#confirmPassword").on("focusout", function() {
 			if (confirmPassword.length == 0) {
+				$("#confirmPassword").attr("class", "d-input input-reject");
+				$("#passwordValiMessage").attr("class", "n-validation");
 				$("#passwordConfirmValiMessage").html('비밀번호 확인은 필수정보입니다.');
 				return;
 			}
@@ -216,8 +238,12 @@
 		var name = $("#name").val().trim();
 
 		if (name.length === 0) {
+			$("#name").attr("class", "d-input input-reject");
+			$("#nameValiMessage").attr("class", "n-validation");
 			$("#nameValiMessage").html('이름은 필수 정보입니다.');
 		} else {
+			$("#name").attr("class", "d-input input");
+			$("#nameValiMessage").attr("class", "n-validation validation-pass");
 			$("#nameValiMessage").html('');
 		}
 	});
@@ -227,9 +253,13 @@
 		var name = $("#joinNickName").val().trim();
 
 		if (name.length === 0) {
-			$("#hLayerNickName").html('닉네임은 필수 정보입니다.');
+			$("#joinNickName").attr("class", "d-input input-reject");
+			$("#nickNameValiMessage").attr("class", "n-validation");
+			$("#nickNameValiMessage").html('닉네임은 필수 정보입니다.');
 		} else {
-			$("#hLayerNickName").html('');
+			$("#joinNickName").attr("class", "d-input input");
+			$("#nickNameValiMessage").attr("class", "n-validation validation-pass");
+			$("#nickNameValiMessage").html('');
 		}
 	});
 	
@@ -242,9 +272,9 @@
 		$("#email").val('');
 		$("#email").val(trimedEmail);
 	
-
-	
 		if (trimedEmail.length === 0) {
+			$("#email").attr("class", "d-input input-reject");
+			$("#hLayeremail").attr("class", "n-validation");
 			$("#hLayeremail").html('이메일은 필수정보입니다.');
 		} else {
 			var email = $("#email").val();
@@ -252,8 +282,12 @@
 					|| email.indexOf('.') === -1;
 	
 			if (isInvalidEmail) {
+				$("#email").attr("class", "d-input input-reject");
+				$("#hLayeremail").attr("class", "n-validation");
 				$("#hLayeremail").html("이메일 주소가 올바르지 않습니다.");
 			} else {
+				$("#email").attr("class", "d-input input");
+				$("#hLayeremail").attr("class", "n-validation validation-pass");
 				$("#hLayeremail").html("");
 			}
 			
@@ -272,12 +306,13 @@
         $("#email").val(email);
 
 		$("#emailDomainList").hide();
+		$("#email").attr("class", "d-input input");
 		$("#hLayeremail").html("");
 
         return false;
     });
 	 
-	 
+	// email 입력칸에 입력했을 때
 	$("#email").on("keyup", function(e) {
 
 		console.log("keyup")
@@ -295,7 +330,7 @@
 		if (value.indexOf("@") != -1) {
 			console.log("keyup2")
 
-			e.target.parentElement.className = "n-form-layer is-active";
+			$('#emailFromLayer').attr("class", "n-form-layer is-active");
 			$("#emailDomainList").show();
 			$("#emailDomainList li").show();
 			var inputDomain = $("#email").val().split('@')[1];
@@ -312,7 +347,7 @@
 			
 		} else {
 			console.log("parent")
-			$('#emailFromLayer').attr("class", "n-form-layer");
+			$('#emailFromLayer').removeClass("n-form-layer");
 			$('#emailDomainList').attr("style", "display: none;");
 		}
 
@@ -320,7 +355,7 @@
 
 
 	
-	
+	// 폼 submit 전 점검 사항
 	$(".form-area #joinForm").on("submit", function() {
 		
 		var id = $("#userId").val();
@@ -333,7 +368,7 @@
 			return false;
 		}
 		
-		// 패스워드 8자 이상
+		// 패스워드 미입력
 		var pw = $("#password").val();
 		if (pw.length === 0){
 			alert("비밀 번호를 입력해주세요.");
@@ -407,12 +442,16 @@
 		validateLengthUserIdWhenKeyup();
 	
 		if (userId.length == 0) {
+			$("#userId").attr("class", "d-input input-reject");
+			$("#hLayerid").attr("class", "n-validation");
 			$("#hLayerid").removeClass('validation-pass').html(
 					'아이디는 필수 정보입니다.');
 			return false;
 		}
 	
 		if (userId.length < 5) {
+			$("#userId").attr("class", "d-input input-reject");
+			$("#hLayerid").attr("class", "n-validation");
 			$("#hLayerid").removeClass('validation-pass').html(
 					'아이디는 5자 이상이어야 합니다');
 			return false;
@@ -424,9 +463,13 @@
 		}
 		
 		if (userId.search(/\s/) != -1) {
+			$("#userId").attr("class", "d-input input-reject");
+			$("#hLayerid").attr("class", "n-validation");
 			$('#hLayerid').html("아이디는 공백 없이 입력해주세요.");
 			return false;
 		} else if (num < 0 || eng < 0) {
+			$("#userId").attr("class", "d-input input-reject");
+			$("#hLayerid").attr("class", "n-validation");
 			$('#hLayerid').html("영문, 숫자를 혼합하여 입력해주세요.");
 			return false;
 		}
@@ -444,9 +487,13 @@
 				/*성공시 처리해야될 코드 작성*/
 				if (response == 'can') {
 					console.log("can");
+					$("#userId").attr("class", "d-input input");
+					$("#hLayerid").attr("class", "n-validation validation-pass");
 					$("#hLayerid").html("사용할 수 있는 아이디 입니다.");
 				} else {
 					console.log("cant");
+					$("#userId").attr("class", "d-input input-reject");
+					$("#hLayerid").attr("class", "n-validation");
 					$("#hLayerid").html("사용할 수 없는 아이디 입니다.")
 	
 				}

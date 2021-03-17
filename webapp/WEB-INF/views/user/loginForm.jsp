@@ -47,7 +47,7 @@
 
 
 				<ul class="loginMenu">
-					<li><a href="" id="joinform" class="link-join" data-clk="log_off.join"> 회원가입 </a></li>
+					<li><a href="${pageContext.request.contextPath}/user/joinform" id="joinform" class="link-join" data-clk="log_off.join"> 회원가입 </a></li>
 					<li class="idsearch"><a href="" id="findID" class="d-link" data-clk="log_off.searchID"> 아이디 찾기 </a></li>
 					<li><a href="" id="findPass" class="d-link" data-clk="log_off.searchPass"> 비밀번호 찾기 </a></li>
 				</ul>

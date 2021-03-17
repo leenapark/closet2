@@ -103,6 +103,17 @@ public class UserController {
 		return	"redirect:/";
 	}
 	
+	/*****************회원정보 수정********************/
+	@RequestMapping(value="/modify", method = {RequestMethod.GET, RequestMethod.POST})
+	public String modify() {
+		System.out.println("UserController");
+		
+		
+		return "";
+	}
+	
+	
+	
 	/***************************follow***********************************/
 	@RequestMapping("/following")
 	public String following() {
