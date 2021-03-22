@@ -396,3 +396,13 @@ ul {
 .modify-pass.is-active {
 	display: block;
 }
+
+
+#change-profile-image-area {
+	display: none;
+}
+
+.form-group .change-profile > img {
+	width: 345px;
+	height: 345px;
+}

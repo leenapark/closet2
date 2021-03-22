@@ -26,17 +26,17 @@
 		]]>
 	</select>
 	
-<!-- 	userNo, /* 회원식별번호 */
-        id, /* 아이디 */
-        password, /* 비밀번호 */
-        name, /* 이름 */
-        email, /* 이메일 */
-        gender, /* 성별 */
-        nickName, /* 별명 */
-        joinDate, /* 가입일 */
-        profileImg varchar2(1000), /* 프로필이미지 */
-	todayVisit NUMBER NOT NULL, /* 오늘방문자 */
-	totalVisit NUMBER NOT NULL, /* 총 방문자 */
+<!-- 	"ID" VARCHAR2(20 BYTE), 
+	"PASSWORD" VARCHAR2(20 BYTE), 
+	"NAME" VARCHAR2(20 BYTE), 
+	"EMAIL" VARCHAR2(50 BYTE), 
+	"GENDER" VARCHAR2(10 BYTE), 
+	"NICKNAME" VARCHAR2(20 BYTE), 
+	"JOINDATE" DATE, 
+	"PROFILEIMG" VARCHAR2(1000 BYTE), 
+	"POINT" NUMBER default 0, 
+	"TODAYVISIT" NUMBER default 0, 
+	"TOTALVISIT" NUMBER default 0
         
 	 -->
 	<!-- 회원가입 -->
@@ -52,6 +52,7 @@
 				#{nickName},
 				sysdate,
 				#{profileImg},
+				default,
 				default,
 				default)		
 		]]>

@@ -29,11 +29,11 @@
 		<h1 class="n-hidden">회원 정보 수정</h1>
 
 		<div class="form-area user">
-			<form id="modifyForm" action="">
-
+			<%-- <form id="modifyForm" action="${pageContext.request.contextPath}/user/modify" method="" enctype="multipart/form-data">
+ --%>
 				<!-- header -->
 				<header class="user-header">
-
+		
 					<div class="logo">
 						<a href="${pageContext.request.contextPath}/">
 							<img src="${pageContext.request.contextPath}/assets/images/logo.png">
@@ -42,9 +42,10 @@
 					<p class="text-fontsname">회원 정보 수정</p>
 				</header>
 				<!-- header -->
-
+	
 				<!-- 회원 정보 수정 -->
-				<div class="form-group">
+				
+				<div class="form-group" id="profile-image-area">
 					<label for="profile" class="form-label" aria-hidden="true"> 프로필 사진 <span class="essential">필수 입력</span>
 					</label>
 					<div class="basic-profile">
@@ -53,19 +54,31 @@
 					<div class="profile-btn">
 						<button type="button" id="change-profile-image-btn" class="n-btn btn-sm btn-default cert-hidden">프로필 변경</button>
 					</div>
+				</div>
+				
+				<div class="form-group" id="change-profile-image-area">
+					<label for="profile" class="form-label" aria-hidden="true"> 프로필 사진 <span class="essential">필수 입력</span>
+					</label>
+					<div class="change-profile">
+						<img src="${pageContext.request.contextPath}/assets/images/default.png" id="profile-change-image">
+					</div>
+					<div class="profile-btn">
+						<button type="button" id="change-profile-image-btn" class="n-btn btn-sm btn-default cert-hidden">프로필 변경</button>
+					</div>
 					<div class="btn-group">
 						<label for="profile-image" class="n-btn btn-sm">프로필 변경</label>
-						<input type="file" id="profile-image" class="n-hidden">
+						<input type="file" id="profile-image" name="profile-image" class="n-hidden">
 						<button type="button" class="n-btn btn-sm" id="change-default-image-btn">기본 프로필</button>
 						<input type="text" id="defaultImage" name="defaultImage">
 						<button type="button" class="n-btn btn-sm btn-lighter" id="change-profile-cancel-btn">
 							취소
 						</button>
-						<button type="button" class="n-btn btn-sm btn-accent disabled" id="change-profile-finish-btn">
+						<button type="button" class="n-btn btn-sm btn-accent disabled" id="change-profile-image-finish-btn">
 							완료
 						</button>
 					</div>
 				</div>
+				
 
 				<div class="form-group">
 					<label for="userId" class="form-label" aria-hidden="true"> ID</label>
@@ -131,7 +144,7 @@
 				</div>
 
 
-			</form>
+			<!-- </form> -->
 		</div>
 		<!-- modify form -->
 
@@ -166,6 +179,133 @@ $("#change-password-cancel-btn").on("click", function(){
 });
 
 
+$(document).ready(function(){
+	var maxUploadSize = 1048576;
+    var maxUploadSizeMsg = '최대 파일 사이즈는 1MB 입니다.';
+	
+    $("#change-profile-image-btn").click(function(e){
+        e.preventDefault();
+        $("#profile-image-area").css("display","none");
+        $("#change-profile-image-area").css("display", "block");
+    });
+
+    $("#change-profile-cancel-btn").click(function(e){
+        e.preventDefault();
+        $("#profile-image").val('');
+        $("#profile-image-area").css("display", "block");
+        $("#change-profile-image-area").css("display", "none");
+    });
+
+    $("#change-profile-image-finish-btn").click(function (e) {
+        e.preventDefault();
+        var files = $("#profile-image")[0].files[0];
+        var defaultImageValue = $('#defaultImage').val();
+        
+        console.log(files);
+        console.log(defaultImageValue);
+        
+        if ($('#defaultImage').val() == '') {
+            defaultImageValue = 'false';
+            console.log(defaultImageValue);
+        }
+
+        if (null != files || defaultImageValue === 'true') {
+        	console.log("이미지 업로드 부분");
+            var filesName;
+
+            if (defaultImageValue !== 'true' && (filesName = files.name) && !(filesName.toLowerCase().endsWith("jpg") || filesName.toLowerCase().endsWith("png") || filesName.toLowerCase().endsWith("jpeg") || filesName.toLowerCase().endsWith("gif"))) {
+                alert('gif/jpg/png 파일만 등록할 수 있습니다.');
+                return false;
+            } else if (defaultImageValue !== 'true' && files.size > maxUploadSize) {
+                alert(maxUploadSizeMsg);
+                return false;
+            } else {
+
+                var message;
+
+                if (defaultImageValue == 'true'){
+                    message = "기본 이미지로 변경하시겠습니까?";
+                } else {
+                    message = "프로필 사진을 변경하시겠습니까?";
+                }
+
+                if(confirm(message)) {
+					/*
+                    var formData = new FormData();
+                    formData.append('file', files);
+                    formData.append('defaultImage', defaultImageValue);
+					*/
+					
+					
+					
+                    $.ajax({
+                            method: "post",
+                            url: "${pageContext.request.contextPath}/user/profile",
+                            
+                            /*
+                            data: formData,
+                            timeout : 10000,
+                            cache: false,
+                            processData: false,
+                            contentType: false,
+                            */
+                            
+                            success : function (responseData) {
+                                if (responseData.success) {
+                                    $("#profile-image-area").css("display", "");
+                                    $("#change-profile-image-area").css("display", "none");
+                                    $("#profile-image").val('');
+                                    location.reload();
+                                } else {
+                                    $("#profile-image").val('');
+                                    alert(responseData.message);
+                                }
+                            }, error : function () {
+                                alert('프로필 이미지 저장에 실패하였습니다.');
+                            }, fail : function () {
+                                alert('프로필 이미지 저장에 실패하였습니다.');
+                            }
+                        },
+                        true
+                    )
+                }
+            }
+        } else {
+            alert('사진파일을 선택해 주세요.');
+        }
+    });
+    
+    
+    
+});
+
+
+$("#profile-image").on("change", function(e) {
+	console.log("이미지 미리보기 변경");
+    e.preventDefault();
+    var selectedFile = e.target.files;
+    
+             
+            if (null != selectedFile[0]) {
+            	console.log("이미지 미리보기");
+            	readURL(this);
+
+            }
+        
+    
+});
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+       var reader = new FileReader();
+       reader.onload = function (e) {
+           $('#profile-change-image').attr('src', e.target.result);
+       }
+       reader.readAsDataURL(input.files[0]);
+    }
+}
+
+/* 
 // 프로필 이미지 확장자 확인
 $("#change-profile-finish-btn").on("click", function(e){
 	e.preventDefault();
@@ -182,7 +322,7 @@ $("#change-profile-finish-btn").on("click", function(e){
     
     
     
-});
+}); */
 
 
 </script>

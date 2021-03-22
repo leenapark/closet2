@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.closet.service.UserService;
 import com.closet.vo.UserVo;
@@ -104,10 +105,11 @@ public class UserController {
 		return	"redirect:/";
 	}
 	
-	/*****************회원정보 수정********************/
-	@RequestMapping(value="/modify", method = {RequestMethod.GET, RequestMethod.POST})
-	public String modify(@RequestParam("change-profile-image") MultipartFile profile) {
-		System.out.println("UserController modify: " + profile);
+	/*****************회원가입 정보 수정********************/
+	// 프로필 변경	
+	@RequestMapping(value="/profile", method = {RequestMethod.PUT})
+	public String modifyProfile(MultipartHttpServletRequest multi) {
+		System.out.println("UserController modify: " + multi);
 		
 		
 		return "";
