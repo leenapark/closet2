@@ -31,4 +31,18 @@ public class UserDao {
 		sqlSession.insert("insertJoin", userVo);
 	}
 	
+	// 회원 정보 수정
+	public UserVo selectModify(int userNo) {
+		System.out.println("UserDao");
+		
+		return sqlSession.selectOne("user.selectModify", userNo);
+	}
+	
+	// 프로필 업데이트
+	public int updateProfile(UserVo userVo) {
+		System.out.println("userDao: " + userVo);
+
+		return sqlSession.update("user.updateProfile", userVo);
+	}
+	
 }

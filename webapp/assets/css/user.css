@@ -406,3 +406,8 @@ ul {
 	width: 345px;
 	height: 345px;
 }
+
+.validation-pass {
+	display: block;
+    color: #14aaff;	
+}

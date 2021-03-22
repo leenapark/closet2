@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.closet.service.UserService;
 import com.closet.vo.UserVo;
@@ -29,35 +28,6 @@ public class UserController {
 		
 		
 		return "user/loginForm";
-	}
-	
-	
-	@RequestMapping("/joinform")
-	public String joinForm() {
-		System.out.println("usercontroller joinForm");
-		
-		return "user/joinForm";
-	}
-	
-	@RequestMapping("/joinform2")
-	public String joinForm2() {
-		System.out.println("usercontroller joinForm");
-		
-		return "user/joinForm2";
-	}
-	
-	@RequestMapping("/complete")
-	public String joincomplete() {
-		System.out.println("UserController joincomplete");
-		
-		return "user/joinOk";
-	}
-	
-	@RequestMapping("/modifyform")
-	public String modifyForm() {
-		System.out.println("UserController modifyForm");
-		
-		return "user/modifyForm";
 	}
 	
 	@RequestMapping("/login")
@@ -86,6 +56,45 @@ public class UserController {
 		return "redirect:../";
 	}
 	
+	
+	@RequestMapping("/joinform")
+	public String joinForm() {
+		System.out.println("usercontroller joinForm");
+		
+		return "user/joinForm";
+	}
+	
+	@RequestMapping("/joinform2")
+	public String joinForm2() {
+		System.out.println("usercontroller joinForm");
+		
+		return "user/joinForm2";
+	}
+	
+	@RequestMapping("/complete")
+	public String joincomplete() {
+		System.out.println("UserController joincomplete");
+		
+		return "user/joinOk";
+	}
+	
+	@RequestMapping("/modifyform")
+	public String modifyForm(HttpSession session, Model model) {
+		System.out.println("UserController modifyForm");
+		UserVo authUser = (UserVo) session.getAttribute("authMember");
+		System.out.println("modifyform authUser: " + authUser);
+
+		
+		UserVo userVo = userService.modifyform(authUser.getUserNo());
+		System.out.println("modifyform userVo: " + userVo);
+		
+		model.addAttribute("modifyUser", userVo);
+		
+		return "user/modifyForm";
+	}
+	
+	
+	
 	/********id check*******/
 	@ResponseBody
 	@RequestMapping(value="/checkid", method = {RequestMethod.GET, RequestMethod.POST})
@@ -106,15 +115,18 @@ public class UserController {
 	}
 	
 	/*****************회원가입 정보 수정********************/
-	// 프로필 변경	
-	@RequestMapping(value="/profile", method = {RequestMethod.PUT})
-	public String modifyProfile(MultipartHttpServletRequest multi) {
-		System.out.println("UserController modify: " + multi);
+	// 프로필 변경
+	@ResponseBody
+	@RequestMapping(value="/profile", method = {RequestMethod.PUT, RequestMethod.GET, RequestMethod.POST})
+	public UserVo modifyProfile(@RequestParam("file") MultipartFile file, @ModelAttribute UserVo userVo) {
+		System.out.println("UserController modify: " + file);
+				
+		UserVo vo = userService.profileUpdate(file, userVo);
 		
-		
-		return "";
+		return vo;
 	}
 	
+	// 프로필 제외한 정보 변경
 	
 	
 	/***************************follow***********************************/

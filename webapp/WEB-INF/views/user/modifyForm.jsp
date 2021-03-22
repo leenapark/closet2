@@ -44,12 +44,14 @@
 				<!-- header -->
 	
 				<!-- 회원 정보 수정 -->
-				
-				<div class="form-group" id="profile-image-area">
+				<!-- 프로필 부분 -->
+<%-- 				<form method="post" action="${pageContext.request.contextPath }/user/profile" enctype="multipart/form-data">
+ --%>				
+ 				<div class="form-group" id="profile-image-area">
 					<label for="profile" class="form-label" aria-hidden="true"> 프로필 사진 <span class="essential">필수 입력</span>
 					</label>
 					<div class="basic-profile">
-						<img src="${pageContext.request.contextPath}/assets/images/default.png">
+						<img src="${pageContext.request.contextPath}/upload/${modifyUser.profileImg }" id="profile">
 					</div>
 					<div class="profile-btn">
 						<button type="button" id="change-profile-image-btn" class="n-btn btn-sm btn-default cert-hidden">프로필 변경</button>
@@ -60,7 +62,7 @@
 					<label for="profile" class="form-label" aria-hidden="true"> 프로필 사진 <span class="essential">필수 입력</span>
 					</label>
 					<div class="change-profile">
-						<img src="${pageContext.request.contextPath}/assets/images/default.png" id="profile-change-image">
+						<img src="${pageContext.request.contextPath}/upload/${modifyUser.profileImg }" id="profile-change-image">
 					</div>
 					<div class="profile-btn">
 						<button type="button" id="change-profile-image-btn" class="n-btn btn-sm btn-default cert-hidden">프로필 변경</button>
@@ -78,7 +80,7 @@
 						</button>
 					</div>
 				</div>
-				
+				<!-- </form> -->
 
 				<div class="form-group">
 					<label for="userId" class="form-label" aria-hidden="true"> ID</label>
@@ -97,17 +99,29 @@
 						<button type="button" id="change-password-btn" class="n-btn btn-sm btn-default cert-hidden">비밀번호 변경</button>
 						
 						<div class="modify-pass">
-							<div class="pass">
+							<div class="pass-now">
 								<label for="password">현재 비밀번호</label>
-								<input type="text" class="d-input text-password" tabindex="0" id="password" name="password" autocomplete="off">
+								<input type="password" class="d-input" tabindex="0" id="password" name="password" autocomplete="off">
+								<input type="hidden" id="hidden-pass" value="${modifyUser.password }">
+								<p class="n-validation" id="passwordValiMessage">
+
+									<!-- 패스워드 안내문 -->
+			
+								</p>
 							</div>
-							<div class="pass">
+							<div class="pass-new">
 								<label for="password">새 비밀번호</label>
-								<input type="text" class="d-input text-password" tabindex="0" id="password" name="password" autocomplete="off">
+								<input type="text" class="d-input" tabindex="0" id="new-password" name="password" autocomplete="off">
+								<p class="n-validation" id="newPasswordValiMessage">
+									<!-- 새비밀번호 안내문 -->
+								</p>
 							</div>
-							<div class="pass">
+							<div class="pass-new">
 								<label for="password">새 비밀번호 확인</label>
-								<input type="text" class="d-input text-password" tabindex="0" id="password" name="password" autocomplete="off">
+								<input type="text" class="d-input" tabindex="0" id="new-confirm-password" name="password" autocomplete="off">
+								<p class="n-validation" id="newPasswordConfirmValiMessage">
+									<!-- 비밀번호 확인 안내문 -->
+								</p>
 							</div>
 							
 							<div class="pass-btn-group">
@@ -129,7 +143,8 @@
 
 				<div class="form-group">
 					<label for="email" class="form-label" aria-hidden="true"> E-mail
-					</label> <input type="text" class="d-input text-email" tabindex="0" id="email" name="email" placeholder="E-mail" autocomplete="off" maxlength="50">
+					</label>
+					<input type="text" class="d-input text-email" tabindex="0" id="email" name="email" placeholder="E-mail" autocomplete="off" maxlength="50">
 				</div>
 
 				<div class="form-group">
@@ -166,17 +181,11 @@ $("#change-profile-image-btn").on("click", function(){
 	$(".btn-group").attr("class", "btn-group is-active");
 });
 
-$("#change-password-btn").on("click", function(){
-	$(".modify-pass").attr("class", "modify-pass is-active");
-});
-
 $("#change-profile-cancel-btn").on("click", function(){
 	$(".btn-group").removeClass("is-active");
 });
 
-$("#change-password-cancel-btn").on("click", function(){
-	$(".modify-pass").removeClass("is-active");
-});
+
 
 
 $(document).ready(function(){
@@ -230,36 +239,40 @@ $(document).ready(function(){
                 }
 
                 if(confirm(message)) {
-					/*
+					
+                	var id = $("#userId").val();
+                	console.log(id);
+                	
                     var formData = new FormData();
+                                        
                     formData.append('file', files);
                     formData.append('defaultImage', defaultImageValue);
-					*/
-					
-					
+					formData.append('id', id)
+
 					
                     $.ajax({
                             method: "post",
                             url: "${pageContext.request.contextPath}/user/profile",
-                            
-                            /*
                             data: formData,
                             timeout : 10000,
                             cache: false,
                             processData: false,
                             contentType: false,
-                            */
                             
-                            success : function (responseData) {
-                                if (responseData.success) {
-                                    $("#profile-image-area").css("display", "");
+                            dataType: "json",
+                            success : function (userVo) {
+	                            	var result = "${pageContext.request.contextPath}/upload/" + userVo.profileImg;
+									console.log(userVo);
+                                	console.log("여기 1번");
+                                	$("#profile").attr("src", result);
+                            		$("#profile-change-image").attr("src", result);
+                                	$("#profile-image-area").css("display", "");
                                     $("#change-profile-image-area").css("display", "none");
                                     $("#profile-image").val('');
-                                    location.reload();
-                                } else {
-                                    $("#profile-image").val('');
-                                    alert(responseData.message);
-                                }
+
+                            	
+                                    //location.reload();                                	
+                                    
                             }, error : function () {
                                 alert('프로필 이미지 저장에 실패하였습니다.');
                             }, fail : function () {
@@ -305,24 +318,56 @@ function readURL(input) {
     }
 }
 
-/* 
-// 프로필 이미지 확장자 확인
-$("#change-profile-finish-btn").on("click", function(e){
-	e.preventDefault();
-    var files = $("#profile-image")[0].files[0];
-    var defaultImageValue = $('#defaultImage').val();
-    
-    console.log(files);
-    console.log(defaultImageValue);
-    
-    if ($('#defaultImage').val() == '') {
-    	console.log("defaultImage");
-    	defaultImageValue = "false";
-    }
-    
-    
-    
-}); */
+
+/************************password **********************/
+$("#change-password-btn").on("click", function(){
+	$(".modify-pass").attr("class", "modify-pass is-active");
+});
+
+$("#change-password-cancel-btn").on("click", function(){
+	$(".modify-pass").removeClass("is-active");
+});
+
+$(".pass-now").on("propertychange focusout change keyup paste input", function(){
+	console.log("비밀번호 영역");
+	
+	var password = $("#hidden-pass").val();
+	console.log(password);
+	var pw = $("#password").val();
+	console.log(pw);
+	var newPassword = $("#new-password").val();
+	console.log(newPassword);
+	
+	if (password !== pw) {
+		console.log("password 불일치");
+		$("#password").attr("class", "d-input input-reject");
+		$("#passwordValiMessage").attr("class", "n-validation");
+		$('#passwordValiMessage').html('비밀번호가 일치하지 않습니다.');
+		$("#newPasswordValiMessage").html('');
+		$("#newPasswordConfirmValiMessage").html('');
+		return;
+	} else if(password === pw) {
+		console.log("password 일치");
+		$("#password").attr("class", "d-input input");
+		$("#passwordValiMessage").attr("class", "n-validation validation-pass");
+		$("#passwordValiMessage").html('비밀번호가 일치합니다.');
+		return;
+	}
+	
+});
+
+
+
+if (password === newPassword) {
+	console.log("새헌비번 일치");
+	$("#password").attr("class", "d-input input-reject");
+	$("#new-password").attr("class", "d-input input-reject");
+
+	$("#newPasswordValiMessage").html('현재 비밀번호와 동일합니다.');
+	$("#newPasswordConfirmValiMessage").html('');
+	
+	return;
+}
 
 
 </script>

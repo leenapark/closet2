@@ -69,7 +69,9 @@
 				<div class="form-group pass">
 					<input type="text" class="d-input" tabindex="0" id="confirmPassword" name="confirmPassword" placeholder="비밀번호 확인" autocomplete="new-password">
 					<p class="n-validation" id="passwordConfirmValiMessage">
+						
 						<!-- 비밀번호 확인 안내문 -->
+					
 					</p>
 				</div>
 
@@ -177,7 +179,7 @@
 			$("#password").attr("class", "d-input input-reject");
 			$("#passwordValiMessage").attr("class", "n-validation");
 			$('#passwordValiMessage').html('비밀번호는 필수정보입니다.');
-			$("passwordConfirmValiMessage").html('');
+			$("#passwordConfirmValiMessage").html('');
 			return;
 		}
 
