@@ -29,8 +29,7 @@
 		<h1 class="n-hidden">회원 정보 수정</h1>
 
 		<div class="form-area user">
-			<%-- <form id="modifyForm" action="${pageContext.request.contextPath}/user/modify" method="" enctype="multipart/form-data">
- --%>
+
 				<!-- header -->
 				<header class="user-header">
 		
@@ -45,8 +44,7 @@
 	
 				<!-- 회원 정보 수정 -->
 				<!-- 프로필 부분 -->
-<%-- 				<form method="post" action="${pageContext.request.contextPath }/user/profile" enctype="multipart/form-data">
- --%>				
+			
  				<div class="form-group" id="profile-image-area">
 					<label for="profile" class="form-label" aria-hidden="true"> 프로필 사진 <span class="essential">필수 입력</span>
 					</label>
@@ -80,12 +78,11 @@
 						</button>
 					</div>
 				</div>
-				<!-- </form> -->
+				
 
 				<div class="form-group">
 					<label for="userId" class="form-label" aria-hidden="true"> ID</label>
 					<input type="text" readonly class="d-input" tabindex="0" id="userId" name="uesrId" value="${authMember.id }">
-					<strong>${authMember.id }</strong>
 				</div>
 
 				<div class="form-group">
@@ -135,31 +132,47 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="form-group">
-					<label for="nickName" class="form-label" aria-hidden="true"> 닉네임
-					</label> <input type="text" class="d-input text-nickName" tabindex="0" id="joinNickName" name="nickName" placeholder="닉네임" autocomplete="off" maxlength="50">
-				</div>
-
-				<div class="form-group">
-					<label for="email" class="form-label" aria-hidden="true"> E-mail
-					</label>
-					<input type="text" class="d-input text-email" tabindex="0" id="email" name="email" placeholder="E-mail" autocomplete="off" maxlength="50">
-				</div>
-
-				<div class="form-group">
-					<label for="gender" class="form-label" aria-hidden="true"> gender
-					</label> <br> <label for="rdo-male">남</label> <input type="radio" id="rdo-male" name="gender" value="male"> <label for="rdo-female" class="gender-label">여</label> <input type="radio" id="rdo-female" name="gender" value="female">
-				</div>
-
-				
-				<!-- submit -->
-				<div id="modifyBtnDiv">
-					<button type="submit" id="btn-join" class="d-btn">정보 수정</button>
-				</div>
-
-
-			<!-- </form> -->
+				<form method="post" action="${pageContext.request.contextPath }/user/modify">
+					<div class="form-group">
+						<label for="nickName" class="form-label" aria-hidden="true"> 닉네임
+						</label> <input type="text" class="d-input text-nickName" tabindex="0" id="joinNickName" name="nickName" value="${modifyUser.nickName  }" placeholder="닉네임" autocomplete="off" maxlength="50">
+					</div>
+	
+					<div class="form-group">
+						<label for="email" class="form-label" aria-hidden="true"> E-mail
+						</label>
+						<input type="text" class="d-input text-email" tabindex="0" id="email" name="email" placeholder="E-mail" value="${modifyUser.email }" autocomplete="off" maxlength="50">
+					</div>
+	
+					<div class="form-group">
+						<label for="gender" class="form-label" aria-hidden="true">
+						gender
+						</label>
+						<br>
+						<c:choose>
+							<c:when test="${modifyUser.gender == 'male' }">
+								<label for="rdo-male">남</label>
+								<input type="radio" id="rdo-male" name="gender" value="male" checked="checked">
+								<label for="rdo-female" class="gender-label">여</label>
+								<input type="radio" id="rdo-female" name="gender" value="female">
+							</c:when>
+							
+							<c:otherwise>
+								<label for="rdo-male">남</label>
+								<input type="radio" id="rdo-male" name="gender" value="male">
+								<label for="rdo-female" class="gender-label">여</label>
+								<input type="radio" id="rdo-female" name="gender" value="female" checked="checked">
+							</c:otherwise>
+						</c:choose>
+					</div>
+	
+					
+					<!-- submit -->
+					<div id="modifyBtnDiv">
+						<input type="hidden" name="userNo" value="${modifyUser.userNo }">
+						<button type="submit" id="btn-join" class="d-btn">정보 수정</button>
+					</div>
+				</form>
 		</div>
 		<!-- modify form -->
 
@@ -326,6 +339,18 @@ $("#change-password-btn").on("click", function(){
 
 $("#change-password-cancel-btn").on("click", function(){
 	$(".modify-pass").removeClass("is-active");
+	
+	$("#password").val("");
+	$("#password").attr("class", "d-input input");
+	$("#passwordValiMessage").html('');
+	
+	$("#new-password").val("");
+	$("#new-password").attr("class", "d-input input");
+	$("#newPasswordValiMessage").html('');
+	
+	$("#new-confirm-password").val('');
+	$("#new-confirm-password").attr("class", "d-input input");
+	$("#newPasswordConfirmValiMessage").html('');
 });
 
 $(".pass-now").on("propertychange focusout change keyup paste input", function(){
@@ -335,8 +360,7 @@ $(".pass-now").on("propertychange focusout change keyup paste input", function()
 	console.log(password);
 	var pw = $("#password").val();
 	console.log(pw);
-	var newPassword = $("#new-password").val();
-	console.log(newPassword);
+	
 	
 	if (password !== pw) {
 		console.log("password 불일치");
@@ -357,17 +381,92 @@ $(".pass-now").on("propertychange focusout change keyup paste input", function()
 });
 
 
-
-if (password === newPassword) {
-	console.log("새헌비번 일치");
-	$("#password").attr("class", "d-input input-reject");
-	$("#new-password").attr("class", "d-input input-reject");
-
-	$("#newPasswordValiMessage").html('현재 비밀번호와 동일합니다.');
-	$("#newPasswordConfirmValiMessage").html('');
+$(".pass-new").on("propertychange focusout change keyup paste input", function(){
+	var password = $("#hidden-pass").val().trim();
+	console.log(password)
 	
-	return;
-}
+	var newPassword = $("#new-password").val().trim();
+	console.log(newPassword);
+
+	var newConfirmPassword = $("#new-confirm-password").val().trim();
+	console.log(newConfirmPassword);
+	
+	
+	if (password === newPassword) {
+		console.log("새헌비번 일치");
+		$("#password").attr("class", "d-input input-reject");
+		$("#new-password").attr("class", "d-input input-reject");
+		$("#passwordValiMessage").attr("class", "n-validation");
+		$("#newPasswordValiMessage").attr("class", "n-validation");
+		$("#passwordValiMessage").html('현재 비밀번호와 동일합니다.');
+		$("#newPasswordValiMessage").html('현재 비밀번호와 동일합니다.');
+		$("#newPasswordConfirmValiMessage").html('');
+		return;
+	} 
+	
+	if (password !== newPassword && newPassword != "") {
+		console.log("정상");
+		$("#password").attr("class", "d-input input");
+		$("#new-password").attr("class", "d-input input");
+		$("#passwordValiMessage").attr("class", "n-validation validation-pass");
+		$("#newPasswordValiMessage").attr("class", "n-validation validation-pass");
+		$("#passwordValiMessage").html('비밀번호가 일치합니다.');
+		$("#newPasswordValiMessage").html('사용 가능한 비밀번호입니다.');
+		$("#newPasswordConfirmValiMessage").html('');
+	}
+	
+	
+	if (newPassword !== newConfirmPassword) {
+		console.log("새비밀번호가 서로 다를 때");
+		$("#new-confirm-password").attr("class", "d-input input-reject");
+		$("#newPasswordConfirmValiMessage").html('새로운 비밀번호와 다릅니다.');
+		return;
+	}
+	
+});
+
+
+$("#change-password-finish-btn").on("click", function(){
+	
+	var newPassword = $("#new-password").val().trim();
+	console.log(newPassword);
+
+	var newConfirmPassword = $("#new-confirm-password").val().trim();
+	console.log(newConfirmPassword);
+	
+	var id = $("#userId").val().trim();
+	console.log(id);
+	
+	var userVo = {
+			id: $("#userId").val(),
+			password: newPassword
+	}
+	
+	if (newPassword === newConfirmPassword) {
+		/* 비밀번호 변경 */
+		
+		$.ajax({
+			
+			url : "${pageContext.request.contextPath }/user/newpassword",
+			type : "post",
+			data : userVo,
+	
+			dataType : "text",
+			success : function(response) {
+				/*성공시 처리해야될 코드 작성*/
+				console.log("response: " + response);
+                alert('비밀번호가 변경되었습니다.');
+				$(".modify-pass").attr("class", "modify-pass");
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+                alert('비밀번호 변경에 실패했습니다.');
+			}
+		});
+	}
+	
+});
 
 
 </script>

@@ -71,12 +71,6 @@ public class UserController {
 		return "user/joinForm2";
 	}
 	
-	@RequestMapping("/complete")
-	public String joincomplete() {
-		System.out.println("UserController joincomplete");
-		
-		return "user/joinOk";
-	}
 	
 	@RequestMapping("/modifyform")
 	public String modifyForm(HttpSession session, Model model) {
@@ -111,7 +105,7 @@ public class UserController {
 		System.out.println("join: " + userVo.toString());
 		userService.join(userVo);
 		
-		return	"redirect:/";
+		return	"user/joinOk";
 	}
 	
 	/*****************회원가입 정보 수정********************/
@@ -126,8 +120,29 @@ public class UserController {
 		return vo;
 	}
 	
-	// 프로필 제외한 정보 변경
+	// 비밀번호 변경
+	@ResponseBody
+	@RequestMapping(value="/newpassword", method = {RequestMethod.GET, RequestMethod.POST})
+	public String newpassword(@ModelAttribute UserVo userVo) {
+		System.out.println("UserController password: " + userVo);
+		
+		String result = userService.updatePass(userVo);
+		
+		return result;
+	}
 	
+	
+	// 정보 변경
+	@RequestMapping(value="/modify", method = {RequestMethod.GET, RequestMethod.POST})
+	public String modify(@ModelAttribute UserVo userVo) {
+		System.out.println("UserController modify");
+		System.out.println(userVo);
+		
+		
+		int count = userService.modify(userVo);
+		
+		return "redirect:/user/modifyform";
+	}
 	
 	/***************************follow***********************************/
 	@RequestMapping("/following")

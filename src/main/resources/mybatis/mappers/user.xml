@@ -45,6 +45,7 @@
 		]]>
 	</insert>
 	
+	<!-- 프로필 사진 변경 -->
 	<update id="updateProfile" parameterType="UserVo">
 		<![CDATA[
 			update users
@@ -54,7 +55,7 @@
 	</update>
 	
 	
-	<!-- 회원 정보 수정 -->
+	<!-- 회원 정보 수정 폼 -->
 	<select id="selectModify" parameterType="int" resultType="UserVo">
 		<![CDATA[
 			select  id,
@@ -70,5 +71,25 @@
 	    ]]>
 	</select>
 	
+	<!-- 비밀번호 수정 -->
+	<update id="updatePass" parameterType="UserVo">
+		<![CDATA[
+			update users
+			set password = #{password}
+			where id = #{id}
+	    ]]>
+	</update>
+	
+	
+	<!-- 회원정보 수정 -->
+	<update id="updateInfo" parameterType="UserVo">
+		<![CDATA[
+			update users
+			set email = #{email},
+				gender = #{gender},
+				nickName = #{nickName}
+			where userNo = #{userNo}
+	    ]]>
+	</update>
 	
 </mapper>

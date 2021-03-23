@@ -40,10 +40,10 @@ public class UserService {
 	}
 	
 	// 회원가입
-	public void join(UserVo userVo) {
+	public int join(UserVo userVo) {
 		System.out.println("UserService join: " + userVo);
 		
-		userDao.insertJoin(userVo);
+		return userDao.insertJoin(userVo);
 	}
 	
 	// 회원 정보 수정 해당 유저 정보 가져오기
@@ -94,6 +94,27 @@ public class UserService {
 		
 		return userVo;
 		
+	}
+	
+	// password update
+	public String updatePass(UserVo userVo) {
+		System.out.println("UserService updatePass");
+		int count = userDao.updatePass(userVo);
+		String result = "";
+		
+		if (count == 1) {
+			result = "can";
+		}
+		
+		return result;
+	}
+	
+	
+	// 정보 수정
+	public int modify(UserVo userVo) {
+		System.out.println("UserService modify");
+		
+		return userDao.updateInfo(userVo);
 	}
 	
 }

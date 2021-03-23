@@ -411,3 +411,11 @@ ul {
 	display: block;
     color: #14aaff;	
 }
+
+.modify-pass .pass-now p {
+	margin: 10px 0px;
+}
+
+.modify-pass .pass-new p {
+	margin: 10px 0px;
+}

@@ -25,13 +25,13 @@ public class UserDao {
 	}
 	
 	// 회원가입
-	public void insertJoin(UserVo userVo) {
+	public int insertJoin(UserVo userVo) {
 		System.out.println("UserDao insertJoin: " + userVo);
 		
-		sqlSession.insert("insertJoin", userVo);
+		return sqlSession.insert("insertJoin", userVo);
 	}
 	
-	// 회원 정보 수정
+	// 회원 정보 수정 폼
 	public UserVo selectModify(int userNo) {
 		System.out.println("UserDao");
 		
@@ -43,6 +43,21 @@ public class UserDao {
 		System.out.println("userDao: " + userVo);
 
 		return sqlSession.update("user.updateProfile", userVo);
+	}
+	
+	
+	// 비밀번호 변경
+	public int updatePass(UserVo userVo) {
+		System.out.println("userDao updatePass");
+		
+		return sqlSession.update("user.updatePass", userVo);
+	}
+	
+	// 정보 수정
+	public int updateInfo(UserVo userVo) {
+		System.out.println("userDao updateInfo");
+		
+		return sqlSession.update("user.updateInfo", userVo);
 	}
 	
 }
