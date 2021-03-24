@@ -57,7 +57,7 @@ public class UserService {
 	public UserVo profileUpdate(MultipartFile file, UserVo userVo) {
 		System.out.println("UserService profileUpdate");
 
-		String saveDir = "D:\\closet\\FileUp";
+		String saveDir = "D:\\closet\\Profile";
 		
 		// 오리지널 파일 이름
 		String orgName = file.getOriginalFilename();

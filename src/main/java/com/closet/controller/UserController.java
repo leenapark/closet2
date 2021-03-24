@@ -41,7 +41,7 @@ public class UserController {
 
 			session.setAttribute("authMember", authVo);
 			
-			return "redirect:../myroom/"+authVo.getId()+"/main";
+			return "redirect:../mycloset/"+authVo.getId()+"/main";
 			
 		}else {
 			//로그인 실패
