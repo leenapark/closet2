@@ -4,17 +4,34 @@
 	<div style="display: inline-block;">
 		<div id="side_profile">
 			<div>
-				<span id="today">Today:10000</span> <span id="total">Total:10000</span>
+				<span id="today">Today: ${sessionScope.myRoomVo.todayVisit}</span> <span id="total">Total: ${sessionScope.myRoomVo.totalVisit}</span>
 			</div>
-		
-			<img id="profileImg" src="${pageContext.request.contextPath}/assets/images/default.png">
+			<c:choose>
+				<c:when test="${sessionScope.myRoomVo.profileImg == null}">
+					<img id="profileImg" src="${pageContext.request.contextPath}/assets/images/default.png">
+				</c:when>
+				<c:otherwise>
+					<img id="profileImg" src="${pageContext.request.contextPath}/profile/${sessionScope.myRoomVo.profileImg}">
+				</c:otherwise>
+			</c:choose>
+			
 		
 			<div id="nickFollDiv">
-				<span id="nickName">메뚜기(hijava)님</span> <span id="tofollow">팔로우</span>
+				<span id="nickName">${sessionScope.myRoomVo.nickName}(${sessionScope.myRoomVo.id})님</span> 
+				<c:if test="${sessionScope.myRoomVo.id != sessionScope.authMember.id && sessionScope.authMember!=null}">
+					<c:choose>
+						<c:when test="${sessionScope.follow.isFollow == true}">
+							<span id="unfollow">팔로잉</span>
+						</c:when>
+						<c:otherwise>
+							<span id="tofollow">팔로우</span>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
 			</div>
 		
 			<div>
-				<span id="follow"><a href="${pageContext.request.contextPath}/user/followers">팔로워</a>: 0</span> <span id="following"><a href="${pageContext.request.contextPath}/user/following">팔로잉</a>: 0</span>
+				<span id="follow"><a href="${pageContext.request.contextPath}/user/followers">팔로워</a>: ${sessionScope.follow.followerCount}</span> <span id="following"><a href="${pageContext.request.contextPath}/user/following">팔로잉</a>: ${sessionScope.follow.followingCount}</span>
 			</div>
 		</div>
 	
@@ -23,17 +40,17 @@
 				<li>
 					<div class="side_top" id="closet">옷장</div>
 					<ul class="side_sub" id="closet_sub">
-						<li><a href="${pageContext.request.contextPath}/myroom/closet">전체</a></li>
-						<li><a href="#">상의</a></li>
-						<li><a href="#">하의</a></li>
-						<li><a href="#">아우터</a></li>
-						<li><a href="#">신발</a></li>
-						<li><a href="#">악세서리</a></li>
+						<li><a href="${pageContext.request.contextPath}/mycloset/${sessionScope.myRoomVo.id}/closet?clothCategory=0">전체</a></li>
+						<li><a href="${pageContext.request.contextPath}/mycloset/${sessionScope.myRoomVo.id}/closet?clothCategory=1">상의</a></li>
+						<li><a href="${pageContext.request.contextPath}/mycloset/${sessionScope.myRoomVo.id}/closet?clothCategory=2">하의</a></li>
+						<li><a href="${pageContext.request.contextPath}/mycloset/${sessionScope.myRoomVo.id}/closet?clothCategory=3">아우터</a></li>
+						<li><a href="${pageContext.request.contextPath}/mycloset/${sessionScope.myRoomVo.id}/closet?clothCategory=4">신발</a></li>
+						<li><a href="${pageContext.request.contextPath}/mycloset/${sessionScope.myRoomVo.id}/closet?clothCategory=5">악세서리</a></li>
 					</ul>
 				</li>
 				<li>
 					<div class="side_top">
-						<a href="${pageContext.request.contextPath}/myroom/doCodi">코디하기</a>
+						<a href="${pageContext.request.contextPath}/mycloset/${myRoomVo.id}/doCodi">코디하기</a>
 					</div>
 					
 				</li>
@@ -49,14 +66,14 @@
 				--%>
 				<li>
 					<div class="side_top">
-						<a href="${pageContext.request.contextPath}/myroom/styzipList">코디구함 작성글</a>
+						<a href="${pageContext.request.contextPath}/mycloset/${sessionScope.myRoomVo.id}/styzipList">코디구함 작성글</a>
 					</div>
 					
 				</li>
 				
 				<li>
 					<div class="side_top">
-						<a href="${pageContext.request.contextPath}/myroom/wishList">위시리스트</a>
+						<a href="${pageContext.request.contextPath}/mycloset/${sessionScope.myRoomVo.id}/wishList">위시리스트</a>
 					</div>
 					
 				</li>
@@ -68,4 +85,4 @@
 				</c:if>
 			</ul>
 		</div>
-	</div>
+	</div>	

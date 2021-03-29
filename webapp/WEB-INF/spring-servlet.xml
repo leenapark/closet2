@@ -32,9 +32,10 @@
 	<property name="defaultEncoding" value="utf-8" />
 	</bean>
 	
+	
+	
 	<!-- url매핑-->
 	<mvc:resources mapping="/upload/**" location="file:D:/closet/FileUp/" />
-	
 	
 	<mvc:default-servlet-handler />
 	<mvc:annotation-driven />

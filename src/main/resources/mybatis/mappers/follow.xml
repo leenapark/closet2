@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="follow">
+
+	<insert id="toFollow" parameterType="map">
+	<![CDATA[
+		insert into follow values(#{following},#{follower})
+	]]>
+	</insert>
+	
+	<delete id="unFollow" parameterType="map">
+	
+		delete from follow where following = #{following} and follower =#{follower}
+		
+	</delete>
+	
+	<select id="countFollower" parameterType="int" resultType="int">
+	<![CDATA[
+		select count(*) from follow where following = #{myClosetUserNo}
+	]]>
+	</select>
+	
+	<select id="countFollowing" parameterType="int" resultType="int">
+	<![CDATA[
+		select count(*) from follow where follower = #{myClosetUserNo}
+	]]>
+	</select>
+	
+	<select id="isFollow" parameterType="map" resultType="FollowVo">
+	<![CDATA[
+		select following,
+			   follower 
+		from follow 
+		where follower = #{sessionUserNo}
+		and following = #{myClosetUserNo}
+	]]>
+	</select>
+</mapper>

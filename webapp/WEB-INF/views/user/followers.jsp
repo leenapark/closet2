@@ -23,22 +23,26 @@
 	<div id="wrap">
 		<!--header-->
 		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
-
+		
 		<div id="container">
 
 			<!-- side profile&menu -->
 			<c:import url="/WEB-INF/views/includes/sideProfileMenu.jsp"></c:import>
-
+			
 			<div id="follow-main">
-				<div id="follow-menu">
+				<div id="follow-menu" class="clearfix">
 					<ul>
 						<li class="page-follow"><a target="_self" href="${pageContext.request.contextPath}/user/following">following or 팔로잉</a></li>
 						<li class="page-follow followers-active"><a target="_self" href="${pageContext.request.contextPath}/user/followers">followers or 팔로워</a></li>
 					</ul>
 				</div>
 
-				<div id="follow-content" class="clearfix"></div>
+				<div id="follow-content" class="clearfix">
+					팔로워 목록
+					<div class="user"></div>
+				</div>
 			</div>
+			
 		</div>
 
 		<!--footer-->

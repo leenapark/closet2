@@ -39,7 +39,9 @@
 				<header class="user-header">
 
 					<div class="logo">
-						<img src="${pageContext.request.contextPath}/assets/images/logo.png">
+						<a href="${pageContext.request.contextPath}">
+							<img src="${pageContext.request.contextPath}/assets/images/logo.png">
+						</a>
 					</div>
 					<p class="text-fontsname">회원가입</p>
 				</header>

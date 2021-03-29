@@ -7,7 +7,13 @@
 	list-style: none;
 }
 
-#container #follow-main {
+#container {
+	margin: 50px 50px;
+	background-color: #1155ff
+	
+}
+
+#follow-main {
 	float:right;
 	display: inline-block;
 	width: 950px;
@@ -18,7 +24,7 @@
 	font-weight: bold;
     overflow: visible;
     border-bottom: solid 1px #dbdbdb;
-	
+	margin: 20px 0px 0px 0px;
 }
 
 .page-follow {
@@ -67,6 +73,17 @@
 }
 
 
-.follow-content {
-	text-align: right;
+#follow-content {
+	float: inherit;
+	display: inline-block;
+	width: 950px;
+	height: 60px;
+	color: #4D4D4D;
+	position: relative;
+	font-size: 25px;
+	font-weight: bold;
+    overflow: visible;
+    border-bottom: solid 1px #dbdbdb;
+	background-color: #ff0000;
+	margin: 50px 0px;
 }

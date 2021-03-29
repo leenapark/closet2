@@ -24,7 +24,9 @@
 			<!-- header -->
 			<header class="join-header">
 				<div class="logo">
-					<img src="${pageContext.request.contextPath}/assets/images/logo.png">
+					<a href="${pageContext.request.contextPath}">
+						<img src="${pageContext.request.contextPath}/assets/images/logo.png">
+					</a>
 				</div>
 			</header>
 			<!-- header -->
@@ -32,7 +34,7 @@
 			<!-- loginbox -->
 			<div class="joincomplete">
 
-				<img src="${pageContext.request.contextPath}/assets/images/rocket.png">
+				<img src="${pageContext.request.contextPath}/assets/images/confetti.png">
 
 
 				<div class="complete">

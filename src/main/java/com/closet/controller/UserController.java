@@ -1,5 +1,7 @@
 package com.closet.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,26 @@ public class UserController {
 			return "redirect:loginform?result=fail";
 		}
 	}
+	
+	
+	// 소셜 로그인
+	@RequestMapping(value="/kakao", produces = "application/json", method = {RequestMethod.GET, RequestMethod.POST})
+    public String loginFormWithKakao(@RequestParam(value = "code", required = false) String code, HttpSession session) {
+        System.out.println("#########" + code);
+        String access_Token = userService.getAccessToken(code);
+        System.out.println("###access_Token#### : " + access_Token);
+        HashMap<String, Object> userInfo = userService.getUserInfo(access_Token);
+        System.out.println("userInfo: " + userInfo);
+        
+        // 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
+        if (userInfo.get("email") != null) {
+            session.setAttribute("userId", userInfo.get("email"));
+            session.setAttribute("access_Token", access_Token);
+        }
+        
+        return "redirect:/";
+    }
+	
 	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
@@ -159,5 +181,5 @@ public class UserController {
 		
 		
 		return "user/followers";
-	}	
+	}
 }

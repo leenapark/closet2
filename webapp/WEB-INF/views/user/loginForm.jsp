@@ -15,7 +15,7 @@
 <!--리셋css-->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/user.css" type="text/css">
 <!--user css-->
-
+<script type="" src="http://developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 </head>
 <body>
@@ -26,7 +26,9 @@
 			<!-- header -->
 			<header class="login-header">
 				<div class="logo">
-					<img src="${pageContext.request.contextPath}/assets/images/logo.png">
+					<a href="${pageContext.request.contextPath}">
+						<img src="${pageContext.request.contextPath}/assets/images/logo.png">
+					</a>
 				</div>
 			</header>
 			<!-- header -->
@@ -56,9 +58,14 @@
 			<!-- loginbox -->
 
 			<!-- login social -->
-			<a id="custom-login-btn" href="javascript:loginWithKakao()"> <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="222" />
+			<a id="reauthenticate-popup-btn" href="https://kauth.kakao.com/oauth/authorize?client_id=8d1281e9c14b86fda8651f0b64c4769e&redirect_uri=http://localhost:8088/closet2/user/kakao&response_type=code">
+			  <img
+			    src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg"
+			    width="222"
+			  />
 			</a>
-			<p id="token-result"></p>
+			<p id="reauthenticate-popup-result"></p>
+
 
 			<!-- login social -->
 
@@ -68,4 +75,55 @@
 
 	</div>
 </body>
-</html>
+
+
+<script type="text/javascript">
+
+	
+	Kakao.init("b2e722b17838c3c7372103259f3f57a8");
+
+	
+	function loginFormWithKakao() {
+	  Kakao.Auth.loginForm({
+
+		  success: function(authObj) {
+	    	console.log("성공");
+	    	
+	    	Kakao.API.request ({
+	    		url:"/v2/user/me",
+	    		success: function(res){
+	    			console.log(res);
+	    					var id = res.id;
+	    	    			var email = res.kakao_account.email;
+	    	    			var name = res.properties.nickname;
+	    	    			var html = '<br>' + email + '<br>' + name;
+	    			
+	    			
+	    			$('body').append(html);
+	    			
+
+	    			
+	    			
+	    		}
+	    	});
+	    	console.log("authObj: " + authObj);
+	      	showResult(JSON.stringify(authObj))
+	    },
+	    fail: function(err) {
+	    	console.log("실패");
+	      showResult(JSON.stringify(err))
+	    },
+	  })
+	}
+	
+	function showResult(result) {
+		console.log("result: " + result);
+	  	document.getElementById('reauthenticate-popup-result').innerText = result
+	  	console.log(confirm);    
+	}
+	
+	
+	
+  
+
+</script>

@@ -28,12 +28,12 @@
 
 			<!-- side profile&menu -->
 			<c:import url="/WEB-INF/views/includes/sideProfileMenu.jsp"></c:import>
-
+			
 			<div id="follow-main">
-				<div id="follow-menu">
+				<div id="follow-menu" class="clearfix">
 					<ul>
 						<li class="page-follow following-active"><a target="_self" href="${pageContext.request.contextPath}/user/following">following or 팔로잉</a></li>
-					<li class="page-follow"><a target="_self" href="${pageContext.request.contextPath}/user/followers">followers or 팔로워</a></li>
+						<li class="page-follow"><a target="_self" href="${pageContext.request.contextPath}/user/followers">followers or 팔로워</a></li>
 					</ul>
 				</div>
 

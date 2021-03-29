@@ -214,7 +214,7 @@ em {
 
 /******** 로그인 *********/
 
-.login-header .logo > img, .join-header .logo > img {
+.login-header .logo a > img, .join-header .logo a > img {
 	width: 300px;
 	height: 150px;
 }
@@ -256,7 +256,7 @@ em {
 .loginbox #failLogin{
 	display: block;
 	padding: 0 10px 20px 10px;
-	font-size: 20px;
+	font-size: 15px;
 	color: red;
 	
 }
