@@ -92,4 +92,23 @@
 	    ]]>
 	</update>
 	
+	<!-- kakao 회원가입 -->
+	<insert id="joinKakao" parameterType="hashmap">
+		<![CDATA[
+		insert into users
+		VALUES(seq_users_no.nextval,
+				#{id},
+				'',
+				'이름을 입력해주세요',
+				#{email},
+				'',
+				#{nickName},
+				sysdate,
+				'',
+				0,
+				0,
+				0)		
+		]]>
+	</insert>
+	
 </mapper>

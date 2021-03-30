@@ -15,7 +15,9 @@
 <!--리셋css-->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/closet.css">
 <!--리셋css-->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/follow.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/myClosetSide.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerfooter.css"> <!--헤더 푸터css-->
+
 
 
 </head>
@@ -53,7 +55,7 @@
 </body>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/includes/common.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/includes/sideMenu.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/includes/sideMenu.jsp"></script>
 
 <script type="text/javascript">
 	

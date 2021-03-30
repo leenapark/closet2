@@ -37,7 +37,7 @@ public class UserController {
 		
 		System.out.println("UserController login");
 		UserVo authVo = userService.login(userVo);
-		
+		System.out.println(authVo);
 		
 		if(authVo != null) {
 
@@ -63,12 +63,27 @@ public class UserController {
         
         // 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
         if (userInfo.get("email") != null) {
+            session.setAttribute("id", userInfo.get("id"));
             session.setAttribute("userId", userInfo.get("email"));
             session.setAttribute("access_Token", access_Token);
+
+            return "redirect:../mycloset/"+userInfo.get("id")+"/main";
+
+        } else {
+			return "redirect:loginform?result=fail";
         }
-        
-        return "redirect:/";
+        	
     }
+	
+	// 소셜 로그아웃
+	@RequestMapping(value="/kakaologout")
+	public String kakaologout(HttpSession session) {
+	    userService.kakaoLogout((String)session.getAttribute("access_Token"));
+	    session.removeAttribute("access_Token");
+	    session.removeAttribute("userId");
+	    return "index";
+	}
+
 	
 	
 	@RequestMapping("/logout")

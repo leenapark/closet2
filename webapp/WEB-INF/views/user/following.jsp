@@ -15,8 +15,8 @@
 <!--리셋css-->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/closet.css">
 <!--리셋css-->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/follow.css">
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/myClosetSide.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerfooter.css"> <!--헤더 푸터css-->
 
 </head>
 <body>

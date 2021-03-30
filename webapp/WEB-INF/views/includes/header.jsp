@@ -9,6 +9,9 @@
 		            <li><a href="${pageContext.request.contextPath}/user/joinform">회원가입</a></li>
 		        </ul>
         	</c:when>
+        	<c:when test="${sessionScope.id ne null}">
+		        <input type="button" value="로그아웃" onclick="location.href='/kakaologout'">
+        	</c:when>
         	<c:otherwise>
         		<ul id="top_menu">
 		            <li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>

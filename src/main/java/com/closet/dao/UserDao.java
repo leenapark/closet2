@@ -1,5 +1,7 @@
 package com.closet.dao;
 
+import java.util.HashMap;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,7 +30,7 @@ public class UserDao {
 	public int insertJoin(UserVo userVo) {
 		System.out.println("UserDao insertJoin: " + userVo);
 		
-		return sqlSession.insert("insertJoin", userVo);
+		return sqlSession.insert("user.insertJoin", userVo);
 	}
 	
 	// 회원 정보 수정 폼
@@ -58,6 +60,11 @@ public class UserDao {
 		System.out.println("userDao updateInfo");
 		
 		return sqlSession.update("user.updateInfo", userVo);
+	}
+	
+	// 소셜 로그인
+	public void insertKakao( HashMap<String, Object> userInfo) {
+		sqlSession.insert("user.joinKakao", userInfo);
 	}
 	
 }
